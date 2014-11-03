@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 
 var port = process.env.PORT || 50800;
 
-va router = express.Router();
+var router = express.Router();
 
 router.get('/', function(req, res) {
 	res.json({ message: 'hello, world!!!'});
