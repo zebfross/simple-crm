@@ -1,0 +1,41 @@
+{
+  "name": "SimpleCrm",
+  "version": "0.0.0",
+  "main": "app.js",
+  "authors": [
+    "zebfross"
+  ],
+  "license": "MIT",
+  "homepage": "zebfross.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.1",
+    "bootstrapvalidator": "~0.5.3",
+    "d3": "~3.4.13",
+    "datatables": "~1.10.4",
+    "fancybox": "~2.1.5",
+    "jquery-knob": "~1.2.11",
+    "select2": "~3.5.2",
+    "tinymce": "~4.1.6",
+    "jquery-timepicker": "*",
+    "jquery-ui": "~1.11.2",
+    "flot": "~0.8.3",
+    "fullcalendar": "~2.2.2",
+    "morris": "~0.5.2",
+    "fine-uploader": "~5.0.8",
+    "jquery.tinymce": "*",
+    "bower-xcharts": "~0.3.0",
+    "font-awesome": "~4.2.0",
+    "Justified-Gallery": "~3.4.0",
+    "jquery.sparkline": "~2.1.2",
+    "knockout": "~3.2.0",
+    "jquery.cookie": "~1.4.1"
+  }
+}
