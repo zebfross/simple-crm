@@ -1,0 +1,6 @@
+{
+	"prepare": "",
+	"test": "",
+	"deploy": "git push -f git@heroku.com/chattersquareapi.git master:master"
+}
+
