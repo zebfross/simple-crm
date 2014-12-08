@@ -38,7 +38,19 @@
 		},
 		exec: {
 			dist: 'harp compile public\\_source --output ..\\www',
-			server: 'harp server public'
+			server: 'harp server public',
+			run: 'node bin/www'
+		},
+		simplemocha: {
+			all: {
+				src: ["test/**/*.js"]
+			},
+			ui: {
+				src: ["test/ui/*.js"]
+			},
+			models: {
+				src: ["test/models/*.js"]
+			}
 		}
     });
     
@@ -46,11 +58,14 @@
     grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-harp');
 	grunt.loadNpmTasks('grunt-exec');
+	grunt.loadNpmTasks('grunt-simple-mocha');
     
     // Default task(s).
-    grunt.registerTask('default', ['wiredep']);
+    grunt.registerTask('default', ['compile']);
 	
 	grunt.registerTask('harp', ['exec:dist', 'copy:main', 'exec:server']);
 	grunt.registerTask('compile', ['exec:dist', 'copy:main']);
+	grunt.registerTask('test', ['simplemocha:all'])
+	grunt.registerTask('run', ['exec:run'])
 
 };

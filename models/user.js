@@ -3,36 +3,72 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
+var Client = require('./client')
+var utils = require('./utils')
+
+var supportedProps = ["username","password","display_name","email","days_between_contact"]
 
 var UserSchema = new Schema({
     username: String,
     password: String,
     display_name: String,
     email: String,
+	days_between_contact: {type: Number, default: 60},
     clients: [{ type: Schema.Types.ObjectId, ref: 'Client' }],
     alerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
     reminders: [{type: Schema.Types.ObjectId, ref: 'Reminder'}]
 }, { collection: 'crm_users' });
 
-UserSchema.method('validPassword', function(_password, done) {
-	bcrypt.compare(_password, this.get('password'), done);
-});
+UserSchema.statics.validPassword = function(orig, _password, done) {
+	bcrypt.compare(_password, orig, done);
+}
 
-UserSchema.method('hash', function(done) {
-	var _this = this;
-	bcrypt.hash(_this.get('password'), null, null, function(err, hash) {
-		if(err) {return done(err, null);}
-		_this.set('password', hash);
-		done();
-	});
-});
+UserSchema.statics.hash = function(pass, done) {
+	if(!pass) {
+		done(null, null)
+	} else {
+		bcrypt.hash(pass, null, null, function(err, hash) {
+			if(err) {return done(err, null);}
+			done(null, hash);
+		})
+	}
+}
 
-UserSchema.method('register', function(done) {
-	var _this = this
-	_this.hash(function() {
-		_this.save(done)
+UserSchema.statics.register = function(props, done) {
+	props = utils.clean(props, supportedProps)
+	var usr = new User(props);
+	User.hash(props.password, function(err, hash) {
+		usr.password = hash;
+		usr.save(done)
 	})
-})
+	return usr
+}
+
+UserSchema.statics.update = function(id, props, done) {
+	props = utils.clean(props, supportedProps)
+	User.hash(props.password, function(err, hash) {
+		if(hash)
+			props.password = hash
+		else
+			delete props.password
+		User.where({_id: id}).findOneAndUpdate(props, done)
+	})
+}
+
+UserSchema.statics.events = function(id, days_between_contact, start, end, done) {
+	var contactStart = start
+	var contactEnd = end
+	contactStart.setDate(start.getDate() - days_between_contact)
+	contactEnd.setDate(start.getDate() - days_between_contact)
+	Client
+	.where({owner: id})
+	.where({$or: [
+		{birthday: {$gte: start, $lte: end}},
+		{anniversary: {$gte: start, $lte: end}},
+		{date_last_contact: {$gte: contactStart, $lte: contactEnd}}
+	]})
+	.exec(done)
+}
 
 UserSchema.virtual('token').get(function() {
 	return this._token;

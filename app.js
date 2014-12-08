@@ -7,11 +7,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var BearerStrategy = require('passport-http-bearer').Strategy;
 var jwt = require('jwt-simple');
-var secret = 'ebb65a09-0f30-41db-b9ad-9a199a0db862';
+var User = require('./models/user')
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./routes/index')
+var users = require('./routes/users')
+var clients = require('./routes/clients')
 
 var init = function (config) {
 
@@ -46,20 +49,42 @@ var init = function (config) {
     mongoose.connection.on('error', function (error) {
         console.error('MongoDB connection error: %s', error);
     });
+	
+	passport.use(new LocalStrategy(
+		function(username, password, done) {
+			User.findOne({username: username}, function(err, usr) {
+				if(err) {return done(err);}
+				if(!usr) {
+					return done(null, false, {message: 'Incorrect username.'});
+				}
+				User.validPassword(usr.password, password, function(err, valid) {
+					if(err) {return done(err);}
+					if(!valid) {
+						return done(null, false, {message: 'Incorrect password.'});
+					} else {
+						var token = jwt.encode({username: username}, config.secret);
+						usr.token = token;
+						return done(null, usr);
+					}
+				});
+			});
+		}
+	));
 
-	router.param('token', function (req, res, next, token) {
-		var username = jwt.decode(token, secret);
-		console.log("username: " + username);
-		User.findOne({username: username}, function (err, usr) {
-			if (!err && usr) {
-				req.currUser = usr;
-				next();
-			}
+	passport.use(new BearerStrategy(
+	  function(token, done) {
+		var usr = jwt.decode(token, config.secret)
+		User.findOne({ username: usr.username }, function (err, user) {
+		  if (err) { return done(err); }
+		  if (!user) { return done(null, false); }
+		  return done(null, user);
 		});
-	});
+	  }
+	));
 
-    app.use('/', routes);
-    app.use('/users', users);
+    app.use('/', routes)
+    app.use('/users', users)
+	app.use('/clients', clients)
     
 	// Handle 404
 	app.use(function(req, res) {

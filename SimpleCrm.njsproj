@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>SimpleCrm</Name>
+    <RootNamespace>SimpleCrm</RootNamespace>
+    <Environment>env=$(Configuration)</Environment>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>ae476272-5d45-4f8a-9df2-42bd7993ef88</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>bin\www</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <NodejsPort>1337</NodejsPort>
+    <NodejsEnv>Production</NodejsEnv>
+    <StartWebBrowser>True</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="app.js" />
+    <Compile Include="config\config.js" />
+    <Compile Include="Gruntfile.js" />
+    <Compile Include="models\alert.js" />
+    <Compile Include="models\reminder.js" />
+    <Compile Include="models\client.js" />
+    <Compile Include="models\index.js" />
+    <Compile Include="models\activity.js" />
+    <Compile Include="models\user.js" />
+    <Compile Include="public\_source\javascripts\devoops.js" />
+    <Compile Include="public\_source\javascripts\devoops.min.js" />
+    <Compile Include="routes\index.js" />
+    <Compile Include="routes\users.js" />
+    <Compile Include="bin\www" />
+    <Compile Include="test\index.js" />
+    <Content Include=".bowerrc" />
+    <Content Include="bower.json" />
+    <Content Include="package.json" />
+    <Content Include="public\_source\ajax\calendar.html" />
+    <Content Include="public\_source\ajax\charts_coindesk.html" />
+    <Content Include="public\_source\ajax\charts_flot.html" />
+    <Content Include="public\_source\ajax\charts_google.html" />
+    <Content Include="public\_source\ajax\charts_morris.html" />
+    <Content Include="public\_source\ajax\charts_xcharts.html" />
+    <Content Include="public\_source\ajax\dashboard.html" />
+    <Content Include="public\_source\ajax\forms_elements.html" />
+    <Content Include="public\_source\ajax\forms_file_uploader.html" />
+    <Content Include="public\_source\ajax\forms_layouts.html" />
+    <Content Include="public\_source\ajax\gallery_flickr.html" />
+    <Content Include="public\_source\ajax\gallery_simple.html" />
+    <Content Include="public\_source\ajax\maps.html" />
+    <Content Include="public\_source\ajax\map_fullscreen.html" />
+    <Content Include="public\_source\ajax\page_404.html" />
+    <Content Include="public\_source\ajax\page_500.html" />
+    <Content Include="public\_source\ajax\page_contacts.html" />
+    <Content Include="public\_source\ajax\page_feed.html" />
+    <Content Include="public\_source\ajax\page_invoice.html" />
+    <Content Include="public\_source\ajax\page_login.ejs" />
+    <Content Include="public\_source\ajax\page_messages.html" />
+    <Content Include="public\_source\ajax\page_pricing.html" />
+    <Content Include="public\_source\ajax\page_register.ejs" />
+    <Content Include="public\_source\ajax\page_search.html" />
+    <Content Include="public\_source\ajax\tables_beauty.html" />
+    <Content Include="public\_source\ajax\tables_datatables.html" />
+    <Content Include="public\_source\ajax\tables_simple.html" />
+    <Content Include="public\_source\ajax\typography.html" />
+    <Content Include="public\_source\ajax\ui_buttons.html" />
+    <Content Include="public\_source\ajax\ui_grid.html" />
+    <Content Include="public\_source\ajax\ui_icons.html" />
+    <Content Include="public\_source\ajax\ui_jquery-ui.html" />
+    <Content Include="public\_source\ajax\ui_progressbars.html" />
+    <Content Include="public\_source\ajax\_layout.ejs" />
+    <Content Include="public\_source\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="public\_source\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="public\_source\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="public\_source\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="public\_source\images\8962691008_7f489395c9_m.jpg" />
+    <Content Include="public\_source\images\8985207189_01ea27882d_m.jpg" />
+    <Content Include="public\_source\images\9036958611_fa1bb7f827_m.jpg" />
+    <Content Include="public\_source\images\9041440555_2175b32078_m.jpg" />
+    <Content Include="public\_source\images\avatar.jpg" />
+    <Content Include="public\_source\images\chevron-left.png" />
+    <Content Include="public\_source\images\chevron-right.png" />
+    <Content Include="public\_source\images\devoops_getdata.gif" />
+    <Content Include="public\_source\images\devoops_pattern_b10.png" />
+    <Content Include="public\_source\images\logo-200.png" />
+    <Content Include="public\_source\images\logo.png" />
+    <Content Include="public\_source\images\sort-asc.png" />
+    <Content Include="public\_source\images\sort-desc.png" />
+    <Content Include="public\_source\images\sort.png" />
+    <Content Include="public\_source\images\times.png" />
+    <Content Include="public\_source\images\ui-accordion-down.png" />
+    <Content Include="public\_source\images\ui-accordion-right.png" />
+    <Content Include="public\_source\images\ui-left.png" />
+    <Content Include="public\_source\images\ui-right.png" />
+    <Content Include="public\_source\index.ejs" />
+    <Content Include="public\_source\pages\404.ejs" />
+    <Content Include="public\_source\pages\500.ejs" />
+    <Content Include="public\_source\pages\contacts.html" />
+    <Content Include="public\_source\pages\feed.html" />
+    <Content Include="public\_source\pages\login.ejs" />
+    <Content Include="public\_source\pages\page_invoice.html" />
+    <Content Include="public\_source\pages\page_messages.html" />
+    <Content Include="public\_source\pages\page_pricing.html" />
+    <Content Include="public\_source\pages\page_search.html" />
+    <Content Include="public\_source\pages\register.ejs" />
+    <Content Include="public\_source\pages\_layout.ejs" />
+    <Content Include="public\_source\stylesheets\jquery-ui.css" />
+    <Content Include="public\_source\stylesheets\jquery-ui.min.css" />
+    <Content Include="public\_source\stylesheets\style.css" />
+    <Content Include="public\_source\stylesheets\style.min.css" />
+    <Content Include="public\_source\_layout.ejs" />
+    <Content Include="README.md" />
+    <Content Include="views\index.jade" />
+    <Content Include="views\layout.jade" />
+    <Content Include="views\error.jade" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="config\" />
+    <Folder Include="models\" />
+    <Folder Include="public\" />
+    <Folder Include="public\_source\" />
+    <Folder Include="public\_source\ajax\" />
+    <Folder Include="public\_source\fonts\" />
+    <Folder Include="public\_source\images\" />
+    <Folder Include="public\_source\javascripts\" />
+    <Folder Include="public\_source\pages\" />
+    <Folder Include="public\_source\stylesheets\" />
+    <Folder Include="routes\" />
+    <Folder Include="test\" />
+    <Folder Include="views\" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -243,6 +243,7 @@ function LoadSparkLineScript(callback){
 //
 function LoadAjaxContent(url){
 	$('.preloader').show();
+	window.location.hash = url;
 	$.ajax({
 		mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
 		url: url,
@@ -250,6 +251,7 @@ function LoadAjaxContent(url){
 		success: function(data) {
 			$('#ajax-content').html(data);
 			$('.preloader').hide();
+			initAjaxContent();
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			alert(errorThrown);
@@ -2395,7 +2397,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		CloseModalBox();
 	});
-	$('#top-panel').on('click','a', function(e){
+	var ajaxLink = function(e) {
 		if ($(this).hasClass('ajax-link')) {
 			e.preventDefault();
 			if ($(this).hasClass('add-full')) {
@@ -2408,6 +2410,12 @@ $(document).ready(function () {
 			window.location.hash = url;
 			LoadAjaxContent(url);
 		}
+	};
+	$('#top-panel').on('click','a', function(e){
+		ajaxLink.call(this, e);
+	});
+	$('#ajax-content').on('click', '#breadcrumb a', function(e) {
+		ajaxLink.call(this, e);
 	});
 	$('#search').on('keydown', function(e){
 		if (e.keyCode == 13){

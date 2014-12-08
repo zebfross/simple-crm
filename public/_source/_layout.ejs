@@ -22,7 +22,7 @@
 		<link href="plugins/bower-xcharts/xcharts.min.css" rel="stylesheet">
 		<link href="plugins/select2/select2.css" rel="stylesheet">
 		<link href="stylesheets/style.css" rel="stylesheet">
-		
+		<script src="plugins/modernizr/modernizr.js"></script>
 		<script src="plugins/jquery/dist/jquery.js"></script>
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -77,30 +77,23 @@
 							<li class="hidden-xs">
 								<a href="index.html" class="modal-link">
 									<i class="fa fa-bell"></i>
-									<span class="badge">7</span>
+									<span class="badge alert-badge"></span>
 								</a>
 							</li>
 							<li class="hidden-xs">
 								<a class="ajax-link" href="ajax/calendar.html">
 									<i class="fa fa-calendar"></i>
-									<span class="badge">7</span>
-								</a>
-							</li>
-							<li class="hidden-xs">
-								<a href="ajax/page_messages.html" class="ajax-link">
-									<i class="fa fa-envelope"></i>
-									<span class="badge">7</span>
+									<span class="badge reminder-badge"></span>
 								</a>
 							</li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle account" data-toggle="dropdown">
 									<div class="avatar">
-										<img src="images/avatar.jpg" class="img-rounded" alt="avatar" />
 									</div>
 									<i class="fa fa-angle-down pull-right"></i>
 									<div class="user-mini pull-right">
 										<span class="welcome">Welcome,</span>
-										<span>Jane Devoops</span>
+										<span class="display-name"></span>
 									</div>
 								</a>
 								<ul class="dropdown-menu">
@@ -161,10 +154,16 @@
 						<span class="hidden-xs">Dashboard</span>
 					</a>
 				</li>
+				<li>
+					<a href="#" class="active new-client-link">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs">New Client</span>
+					</a>
+				</li>
 				<!--<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Charts</span>
+						<span class="hidden-xs">Clients</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/charts_xcharts.html">xCharts</a></li>
@@ -354,21 +353,36 @@
     <script src="plugins/Justified-Gallery/dist/js/jquery.justifiedGallery.js"></script>
     <script src="plugins/knockout/dist/knockout.js"></script>
     <script src="plugins/jquery.cookie/jquery.cookie.js"></script>
+    <script src="plugins/mustache/mustache.js"></script>
     <!-- endbower -->
 <!-- All functions for this theme + document.ready processing -->
 <script type="text/javascript" src="plugins/fancybox/source/jquery.fancybox.css"></script>
+<script src="javascripts/md5.min.js"></script>
 <script src="javascripts/devoops.js"></script>
+<script src="javascripts/user.js"></script>
+<script src="javascripts/client.js"></script>
 <script src="javascripts/scripts.js"></script>
 <script type="text/javascript">
 	var _logout = function() {
-		logout();
+		User.logout();
+	};
+	User.authenticate(function(res) {
+		if(res) {
+			console.log("successfully authenticated");
+		} else {
+			console.log("error authenticating");
+			window.location = "/pages/login.html";
+		}
+	});
+	var newClient = function() {
+		Client.activeId = null;
+		LoadAjaxContent('ajax/client_form.html');
 	};
 	$(function() {
-		authenticate(function(res) {
-			if(res)
-				console.log("successfully authenticated");
-			else
-				console.log("error authenticating");
+		$(".new-client-link").on("click", function(e) {
+			e.preventDefault();
+			newClient();
+			return false;
 		});
 	});
 </script>

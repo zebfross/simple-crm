@@ -17,6 +17,7 @@ module.exports = {
         db: 'mongodb://root:root@dbh26.mongolab.com:27267/simplecrm',
         root: rootPath,
         notifier: notifier,
+		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
         app: {
             name: 'Simple CRM'
         },
@@ -50,6 +51,7 @@ module.exports = {
         db: 'mongodb://root:root@dbh26.mongolab.com:27267/simplecrm',
         root: rootPath,
         notifier: notifier,
+		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
         app: {
             name: 'Simple CRM'
         },
@@ -83,6 +85,7 @@ module.exports = {
         db: 'mongodb://root:root@dbh26.mongolab.com:27267/simplecrm',
         root: rootPath,
         notifier: notifier,
+		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
         app: {
             name: 'Simple CRM'
         },

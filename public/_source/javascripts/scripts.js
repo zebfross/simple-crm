@@ -14,6 +14,7 @@ $.fn.serializeObject = function()
     });
     return o;
 };
+$.cookie.json = true;
 
 function ProfileFormValidator(){
 	$('#profile-form').bootstrapValidator({
@@ -46,71 +47,41 @@ function ProfileFormValidator(){
 	});
 }
 
-$.cookie.json = true;
-var User = function() {
-	$this = this;
-	
-	this.setCurrent = function(usr) {
-		$.cookie('token', usr.token, {path: '/'});
-		$.cookie('user', usr, {expires: 1, path: '/'});
-	};
-
-	this.getCurrent = function() {
-		var usr = $.cookie("user");
-		return usr;
-	};
-
-	this.login = function(username, password) {
-		var token = $.cookie('token');
-		if(token) {
-			window.location = "/";
-		} else {
-			$.post("/users/login", {'username': username, 'password': password}, function(res) {}, 'json').always(function(usr) {
-				usr = usr.responseJSON || usr;
-				if(usr.error) {
-					alert(usr.error);
-				} else {
-					console.log(usr.token);
-					setCurrentUser(usr);
-					window.location = "/";
-				}
-			});
-			return false;
-		}
-	};
-
-	this.logout = function() {
-		$.removeCookie('token');
-		$.removeCookie('user');
-		window.location = "/pages/login.html";
-	};
-
-	this.register = function(obj) {
-		$.post("/users/register", obj, function(resp) {}, 'json').always(function(usr) {
-			usr = usr.responseJSON || usr;
-			if(usr.error) {
-				alert(usr.error);
-			} else {
-				confirm("Registration successful!  Please continue to login.");
-				window.location = "/pages/login.html";
-			}
+var setReminders = function(reminders) {
+	if(reminders > 0) {
+		$(function() {
+			$(".reminder-badge").text("" + reminders);
 		});
-	};
-
-	this.authenticate = function(done) {
-		$.post("/users/authenticate", {access_token: $.cookie("token")}, function(resp) {
-			done(true);
-		}).fail(function() {
-			if(confirm("authentication failed")){
-				done(false);
-				window.location = "/pages/login.html";
-			}
-			done(true);
-		});
-	};
-	
-	this.save = function(usr) {
-		usr.id = $this.getCurrent().id;
-		$.post("/users/user/
-	};
+	}
 };
+var usr = User.getCurrent();
+if(usr) {
+	var reminders = User.getCurrent().reminders.length;
+	User.recentEvents(User.getCurrent()._id, function(err, events) {
+		if(events && events.length > 0) {
+			reminders += events.length;
+			setReminders(reminders);
+		}
+	});
+}
+
+var initAjaxContent = function() {
+	if(usr) {
+		$(".display-name").text(User.getCurrent().display_name);
+	}
+};
+$(function() {
+	initAjaxContent();
+	if(usr) {
+		var hash = User.getCurrent().email;
+		if(hash) {
+			hash = md5(hash.trim().toLowerCase());
+			var avatar = "http://www.gravatar.com/avatar/" + hash;
+			$(".avatar").html('<img src="' + avatar + '" class="img-rounded" alt="avatar" />');
+		}
+		var alerts = User.getCurrent().alerts.length;
+		if(alerts > 0)
+			$(".alert-badge").text("" + alerts);
+		setReminders(reminders);
+	}
+});

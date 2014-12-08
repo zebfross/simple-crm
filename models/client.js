@@ -2,6 +2,9 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var utils = require('./utils')
+
+var supportedProps = ["name_first", "name_last", "phones", "address1", "address2", "city", "state", "zip", "notes", "birthday", "anniversary", "rating", "email"]
 
 var ClientSchema = new Schema({
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -20,6 +23,7 @@ var ClientSchema = new Schema({
     notes: String,
     birthday: Date,
     anniversary: Date,
+	date_created: {type: Date, default: Date.now },
     date_last_contact: { type: Date, default: Date.now },
     archived: Boolean,
     rating: Number,
@@ -30,5 +34,20 @@ var ClientSchema = new Schema({
             type: String
     }]
 }, { collection: 'crm_clients' });
+
+ClientSchema.statics.create = function(owner, props, done) {
+	console.log(props)
+	props = utils.clean(props, supportedProps)
+	console.log(props)
+	props.owner = owner
+	var client = new Client(props)
+	client.save(done)
+	return client
+}
+
+ClientSchema.statics.update = function(id, props, done) {
+	props = utils.clean(props, supportedProps)
+	Client.where({_id: id}).findOneAndUpdate(props, done)
+};
 
 var Client = module.exports = mongoose.model('Client', ClientSchema);

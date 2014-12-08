@@ -63,7 +63,7 @@
 			
 			$("#register-form").submit(function(e) {
 				if($(this).bootstrapValidator("isValid"))
-					register(this.serializeObject());
+					User.register(this.serializeObject());
 				return false;
 			});
 		});

@@ -11,4 +11,8 @@ var ActivitySchema = new Schema({
     type: String
 }, { collection: 'crm_activities' });
 
-var User = module.exports = mongoose.model('Activity', ActivitySchema);
+ActivitySchema.statics.recent = function(id, skip, limit, done) {
+	Activity.find({owner: id}, {}, {skip: skip, limit: limit}, done)
+}
+
+var Activity = module.exports = mongoose.model('Activity', ActivitySchema);

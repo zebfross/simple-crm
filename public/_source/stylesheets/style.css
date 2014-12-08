@@ -6,6 +6,13 @@ body {
   overflow-y:hidden;
   margin-right: 15px;
 }
+.clickable {
+	cursor: pointer;
+}
+#clients-table tr *:nth-child(1)
+{
+	display:none;
+}
 .modal-open #content {z-index: inherit;}
 .body-expanded .expanded-panel, .fancybox-margin .expanded-panel, .modal-open .expanded-panel {
   margin-right: 15px;
