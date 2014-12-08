@@ -37,7 +37,7 @@
 			}
 		},
 		exec: {
-			dist: 'harp compile public\\_source --output ..\\www',
+			dist: 'harp compile public/_source --output ../www',
 			server: 'harp server public',
 			run: 'node bin/www'
 		},
