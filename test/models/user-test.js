@@ -11,9 +11,9 @@ describe('User', function() {
 	beforeEach(function() {
 		User = proxyquire('../../models/user', {'mongoose': mongooseMock})
 	})
-	describe('validPassword', function() {
-		it('should be a valid password', function(done) {
-			var usr = {username: 'bogus-test', password: 'myPassw0rd'}
+	// describe('validPassword', function() {
+		// it('should be a valid password', function(done) {
+			// var usr = {username: 'bogus-test', password: 'myPassw0rd'}
 			// User.hash(usr.password, function(err, hash) {
 				// User.validPassword(hash, usr.password, function(err, valid) {
 					// (err === null).should.be.true;
@@ -21,16 +21,16 @@ describe('User', function() {
 					// done()
 				// })
 			// })
-			done()
-		})
-	})
-	describe('register', function() {
-		it('should call Mongoose save', function() {
-			var _usr = {username: 'bogus-test', password: 'myPassw0rd'}
-			var cb = sinon.spy()
+			// done()
+		// })
+	// })
+	// describe('register', function() {
+		// it('should call Mongoose save', function() {
+			// var _usr = {username: 'bogus-test', password: 'myPassw0rd'}
+			// var cb = sinon.spy()
 			// var user = User.register(_usr, cb)
 			// cb.should.be.calledOnce
 			// user.save.should.be.calledOnce
-		})
-	})
+		// })
+	// })
 })
