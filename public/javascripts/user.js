@@ -46,7 +46,7 @@ User.logout = function() {
 };
 
 User.register = function(obj) {
-	$.post("/users/register", obj, function(resp) {}, 'json').always(function(usr) {
+	$.post("/users/", obj, function(resp) {}, 'json').always(function(usr) {
 		usr = usr.responseJSON || usr;
 		if(usr.error) {
 			alert(usr.error);

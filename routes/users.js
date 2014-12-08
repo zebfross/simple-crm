@@ -36,6 +36,13 @@ router.get('/unique', function(req, res) {
 	});
 });
 
+router.post("/", function (req, res) {
+    User.register(req.body, function (err, _usr) {
+		if(err) {return res.status(500).json({error: err});}
+        res.json(_usr); 
+    });
+});
+
 router.all('*', function(req, res, next) {
 	if(req.cookies.access_token) {
 		req.body.access_token = req.cookies.access_token.replace(/\"/g, "")
@@ -106,12 +113,6 @@ router.route('/')
             res.status(500).json({ error: err });
     });
 })
-.post(function (req, res) {
-    User.register(req.body, function (err, _usr) {
-		if(err) {return res.status(500).json({error: err});}
-        res.json(_usr); 
-    });
-});
 
 /* GET user. */
 router.route('/:userid')
