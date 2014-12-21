@@ -6,25 +6,26 @@ var Client = models.Client;
 var Activity = models.Activity;
 var passport = require('passport');
 var jwt = require('jwt-simple');
+var flash = require('express-flash')
 
 router.param('userid', function (req, res, next, id) {
 	console.log(id)
     User.findById(id, function (err, usr) {
-        if (!err) {
-			if(!usr) {
-				res.status(404).json({ message: 'user not found'});
-			} else {
-				req.target = usr;
-				next();
-			}
+      if (!err) {
+        if(!usr) {
+          res.status(404).json({ message: 'user not found'});
         } else {
-            res.status(500).json({ error: err });
-		}
+          req.target = usr;
+          next();
+        }
+      } else {
+          res.status(500).json({ error: err });
+      }
     });
 });
 
-router.post('/login', passport.authenticate('local', {session: false}), function (req, res) {
-	res.json(req.user);
+router.get('/login', function(req, res) {
+  res.render("pages/login", {})
 });
 
 router.get('/unique', function(req, res) {
@@ -36,6 +37,11 @@ router.get('/unique', function(req, res) {
 	});
 });
 
+router.get('/logout', function(req, res) {
+  req.logout()
+  res.redirect('/users/login')
+})
+
 router.post("/", function (req, res) {
     User.register(req.body, function (err, _usr) {
 		if(err) {return res.status(500).json({error: err});}
@@ -43,13 +49,18 @@ router.post("/", function (req, res) {
     });
 });
 
-router.all('*', function(req, res, next) {
-	if(req.cookies.access_token) {
-		req.body.access_token = req.cookies.access_token.replace(/\"/g, "")
-		console.log(req.body.access_token)
-	}
-	next()
-}, passport.authenticate('bearer', {session: false}))
+router.post('/login', passport.authenticate('local', {session:true, failureRedirect:"/users/login",failureFlash:"Invalid username or password."}), function (req, res) {
+    console.log("got to /users/login")
+  if(req.headers["X-Requested-With"] == "XMLHttpRequest") {
+    console.log("coming from javascript")
+    res.json(req.user);
+  } else {
+    console.log("user: " + req.user)
+    res.redirect("/home")
+  }
+});
+
+require('./auth')(router)
 
 router.route('/:id/clients')
 .get(function (req, res) {
@@ -82,7 +93,7 @@ router.get('/:userid/events', function(req, res) {
 	console.log(req.query);
 	User.events(req.target._id, req.target.days_between_contact, start, end, function(err, events) {
 		if(err)
-			return res.json({message: err})
+			return res.status(500).json({message: err})
 		else
 			return res.json(events)
 	})

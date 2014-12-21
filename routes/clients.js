@@ -9,7 +9,7 @@ var jwt = require('jwt-simple');
 
 router.param('clientid', function (req, res, next, id) {
 	console.log(id)
-    Client.findById(id, function (err, client) {
+    Client.getById(id, function (err, client) {
         if (!err) {
 			if(!client) {
 				res.status(404).json({ message: 'user not found'});

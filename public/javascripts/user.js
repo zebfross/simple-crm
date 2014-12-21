@@ -10,6 +10,7 @@ if(typeof $ === 'undefined' && typeof exports !== 'undefined' && this.exports !=
 }
 
 var User = function() {};
+var userData = new Data("/users/");
 	
 User.setCurrent = function(usr) {
 	$.cookie('access_token', usr.token, {path: '/'});
@@ -26,15 +27,13 @@ User.getCurrent = function() {
 	return usr;
 };
 
-User.login = function(username, password) {
-	$.post("/users/login", {'username': username, 'password': password}, function(usr) {
-		console.log(usr.token);
-		User.setCurrent(usr);
-		window.location = "/";
-	}, 'json')
-	.error(function(res) {
-		alert(res);
-	});
+User.login = function(username, password, done) {
+  userData.post("login", {'username': username, 'password': password}, function(err, usr) {
+    if(!err) {
+      User.setCurrent(usr);
+    }
+    done(err, usr);
+  });
 };
 
 User.logout = function() {
@@ -42,46 +41,29 @@ User.logout = function() {
 	if(Modernizr.localstorage) {
 		localStorage.removeItem('user');
 	}
-	window.location = "/pages/login.html";
+	return true;
 };
 
-User.register = function(obj) {
-	$.post("/users/", obj, function(resp) {}, 'json').always(function(usr) {
-		usr = usr.responseJSON || usr;
-		if(usr.error) {
-			alert(usr.error);
-		} else {
-			confirm("Registration successful!  Please continue to login.");
-			window.location = "/pages/login.html";
-		}
-	});
+User.register = function(obj, done) {
+  userData.post("", obj, function(err, usr) {
+    done(err, usr);
+  });
 };
 
 User.authenticate = function(done) {
-	$.post("/users/authenticate", function(resp) {
-		done(true);
-	}).fail(function() {
-		if(confirm("authentication failed")){
-			done(false);
-		}
-		done(true);
-	});
+  userData.post("authenticate", {}, function(err, usr) {
+    done(!err);
+  });
 };
 
 User.save = function(usr, done) {
 	var curr = User.getCurrent();
-	$.ajax({
-		url: "/users/" + curr._id,
-		data: usr,
-		type: 'PUT',
-		success: function(res) {
-			User.setCurrent(res);
-			done(null, res);
-		},
-		error: function(err) {
-			done(err, null);
-		}
-	})
+  userData.put(curr._id, usr, function(err, usr) {
+    if(!err) {
+      User.setCurrent(usr);
+    }
+    done(err, usr);
+  });
 };
 
 User.recentEvents = function(id, start, end, done) {
@@ -94,12 +76,7 @@ User.recentEvents = function(id, start, end, done) {
 		start: start.toLocaleDateString(),
 		end: end.toLocaleDateString()
 	};
-	$.getJSON("/users/" + id + "/events", data, function(events) {
-		done(null, events);
-	})
-	.error(function(err) {
-		done(err, null);
-	});
+  userData.get("" + id + "/events", data, done);
 };
 
 User.activity = function(id, skip, limit, done) {
@@ -107,12 +84,7 @@ User.activity = function(id, skip, limit, done) {
 		skip: skip,
 		limit: limit
 	};
-	$.getJSON("/users/" + id + "/activity", data, function(activity) {
-		done(null, activity);
-	})
-	.error(function(err) {
-		done(err, null);
-	});
+  userData.get("" + id + "/activity", data, done);
 };
 
 User.clients = function(id, skip, limit, done) {
@@ -120,12 +92,7 @@ User.clients = function(id, skip, limit, done) {
 		skip: skip,
 		limit: limit
 	};
-	$.getJSON("/users/" + id + "/clients", data, function(clients) {
-		done(null, clients);
-	})
-	.error(function(err) {
-		done(err, null);
-	});
+  userData.get(id + "/clients", data, done);
 };
 
 if(isNode) {

@@ -1,0 +1,151 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a class="ajax-link" href="ajax/dashboard.html">Dashboard</a></li>
+			<li><a href="#">Client</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-search"></i>
+					<span>Client Details</span>
+				</div>
+				<div class="box-icons">
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+				<h4 class="page-header">Client Details <a href="ajax/client_form.html" class="ajax-link"><i class="fa fa-pencil" /></a></h4>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Name</label>
+					<div class="col-sm-4">
+						<span class="name_first"></span>&nbsp;<span class="name_last"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-4">
+						<span class="email"></span>
+					</div>
+					<label class="col-sm-2 control-label">Phone</label>
+					<div class="col-sm-4">
+						<span class="phone"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">City</label>
+					<div class="col-sm-4">
+						<span class="city"></span>
+					</div>
+					<label class="col-sm-2 control-label">State</label>
+					<div class="col-sm-4">
+						<span class="state"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Rating</label>
+					<div class="col-sm-4">
+						<span class="rating"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Notes</label>
+					<div class="col-sm-10">
+						<span class="notes"></span>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				<h4 class="page-header">Correspondence</h4>
+				<form id="comment-form" action="#">
+					<input type="hidden" id="client" name="client" />
+					<input type="hidden" id="owner" name="owner" />
+					<input type="hidden" id="type" name="type" value="comment" />
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Add a comment</label>
+						<div class="col-sm-10">
+							<textarea id="comment" name="comment" style="width: 100%; height: 100px;"></textarea>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-primary btn-label-left">
+							<span><i class="fa fa-clock-o"></i></span>
+								Save
+							</button>
+						</div>
+					</div>
+				</form>
+				<div id="comment-list">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/template" id="comment-template">
+	<div class="comment">
+		<label>{{date_created}}</label>
+		<p>
+			{{comment}}
+		</p>
+	</div>
+</script>
+<script type="text/javascript">
+var prependComment = function(act) {
+	var html = Mustache.render($("#comment-template").html(), act);
+	$("#comment-list").prepend(html);
+};
+// Run Select2 plugin on elements
+$(document).ready(function() {
+	// Create Wysiwig editor for textare
+	//TinyMCEStart('#wysiwig_simple', null);
+	//TinyMCEStart('#wysiwig_full', 'extreme');
+	// Add slider for change test input length
+	//FormLayoutExampleInputLength($( ".slider-style" ));
+	// Initialize datepicker
+	//$('#input_date').datepicker({setDate: new Date()});
+	// Load Timepicker plugin
+	//LoadTimePickerScript(DemoTimePicker);
+	// Add tooltip to form-controls
+	$('.form-control').tooltip();
+	//LoadSelect2Script(DemoSelect2);
+	// Add drag-n-drop feature to boxes
+	WinMove();
+	$("#comment-form").on("submit", function(e) {
+		e.preventDefault();
+		var obj = $(this).serializeObject();
+		Activity.create(obj, function(err, act) {
+			if(err) {
+				alert("Sorry, there was a problem. " + err);
+			} else {
+				console.log("Changes saved successfully.");
+				prependComment(act);
+			}
+		});
+		return false;
+	});
+	Client.getActive(function(err, cli) {
+		if(cli) {
+			for (var prop in cli) {
+				$("." + prop).text(cli[prop]);
+			}
+			$("#client").val(cli._id);
+			$("#owner").val(cli.owner);
+			if(cli.activities) {
+				for (var i in cli.activities) {
+					var act = cli.activities[i];
+					prependComment(act);
+				}
+			}
+		} else {
+			LoadAjaxContent("ajax/dashboard.html");
+		}
+	});
+});
+</script>

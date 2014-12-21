@@ -56,16 +56,17 @@ var setReminders = function(reminders) {
 };
 var usr = User.getCurrent();
 if(usr) {
-	var reminders = User.getCurrent().reminders.length;
-	User.recentEvents(User.getCurrent()._id, function(err, events) {
-		if(events && events.length > 0) {
-			reminders += events.length;
-			setReminders(reminders);
-		}
-	});
+  var reminders = {};
+	// var reminders = User.getCurrent().reminders.length;
+	// User.recentEvents(User.getCurrent()._id, function(err, events) {
+		// if(events && events.length > 0) {
+			// reminders += events.length;
+			// setReminders(reminders);
+		// }
+	// });
 }
 
-var initAjaxContent = function() {
+/*var initAjaxContent = function() {
 	if(usr) {
 		$(".display-name").text(User.getCurrent().display_name);
 	}
@@ -84,4 +85,4 @@ $(function() {
 			$(".alert-badge").text("" + alerts);
 		setReminders(reminders);
 	}
-});
+});*/

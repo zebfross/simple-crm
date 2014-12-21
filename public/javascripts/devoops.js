@@ -241,7 +241,8 @@ function LoadSparkLineScript(callback){
 //
 //  Function for load content from url and put in $('.ajax-content') block
 //
-function LoadAjaxContent(url){
+/*function LoadAjaxContent(url){
+  console.log(url);
 	$('.preloader').show();
 	window.location.hash = url;
 	$.ajax({
@@ -259,7 +260,7 @@ function LoadAjaxContent(url){
 		dataType: "html",
 		async: false
 	});
-}
+}*/
 //
 //  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop
 //
@@ -2301,9 +2302,9 @@ $(document).ready(function () {
 	});
 	var ajax_url = location.hash.replace(/^#/, '');
 	if (ajax_url.length < 1) {
-		ajax_url = 'ajax/dashboard.html';
+		//ajax_url = 'ajax/dashboard.html';
 	}
-	LoadAjaxContent(ajax_url);
+	//LoadAjaxContent(ajax_url);
 	$('.main-menu').on('click', 'a', function (e) {
 		var parents = $(this).parents('li');
 		var li = $(this).closest('li.dropdown');
@@ -2414,7 +2415,7 @@ $(document).ready(function () {
 	$('#top-panel').on('click','a', function(e){
 		ajaxLink.call(this, e);
 	});
-	$('#ajax-content').on('click', '#breadcrumb a', function(e) {
+	$('#ajax-content').on('click', 'a', function(e) {
 		ajaxLink.call(this, e);
 	});
 	$('#search').on('keydown', function(e){

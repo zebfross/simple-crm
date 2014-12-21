@@ -1,0 +1,113 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a class="ajax-link" href="ajax/dashboard.html">Dashboard</a></li>
+			<li><a href="#">Profile</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-search"></i>
+					<span>Profile Edit</span>
+				</div>
+				<div class="box-icons">
+					<!--<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="close-link">
+						<i class="fa fa-times"></i>
+					</a>-->
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+				<h4 class="page-header">Profile <i class="fa fa-pencil"></i></h4>
+				<form id="profile-form" class="form-horizontal" role="form">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Username</label>
+						<div class="col-sm-4">
+							<input id="username" name="username" type="text" class="form-control" placeholder="Username" data-toggle="tooltip" data-placement="bottom" title="The username used to login; can be your email address">
+						</div>
+						<label class="col-sm-2 control-label">Display Name</label>
+						<div class="col-sm-4">
+							<input id="display_name" name="display_name" type="text" class="form-control" placeholder="Display Name" data-toggle="tooltip" data-placement="bottom" title="How we greet you when you log in">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-4">
+							<input id="email" name="email" type="text" class="form-control" placeholder="Email">
+						</div>
+						<label class="col-sm-2 control-label">Days Between Contact</label>
+						<div class="col-sm-4">
+							<input id="days_between_contact" name="days_between_contact" type="number" class="form-control" placeholder="Days Between Contact" title="How often you like to keep in touch with your clients">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Change Password</label>
+						<div class="col-sm-4">
+							<input id="password" type="password" class="form-control" name="password" />
+						</div>
+						<label class="col-sm-2 control-label">Retype password</label>
+						<div class="col-sm-4">
+							<input id="password-confirm" type="password" class="form-control" name="confirmPassword" />
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="form-group">
+						<div class="col-sm-2">
+							<button type="submit" class="btn btn-primary btn-label-left">
+							<span><i class="fa fa-clock-o"></i></span>
+								Save
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+// Run Select2 plugin on elements
+$(document).ready(function() {
+	// Create Wysiwig editor for textare
+	//TinyMCEStart('#wysiwig_simple', null);
+	//TinyMCEStart('#wysiwig_full', 'extreme');
+	// Add slider for change test input length
+	//FormLayoutExampleInputLength($( ".slider-style" ));
+	// Initialize datepicker
+	//$('#input_date').datepicker({setDate: new Date()});
+	// Load Timepicker plugin
+	//LoadTimePickerScript(DemoTimePicker);
+	// Add tooltip to form-controls
+	$('.form-control').tooltip();
+	//LoadSelect2Script(DemoSelect2);
+	// Load example of form validation
+	LoadBootstrapValidatorScript(ProfileFormValidator);
+	// Add drag-n-drop feature to boxes
+	WinMove();
+	$("#profile-form").on("success.form.bv", function(e) {
+		e.preventDefault();
+		User.save($(this).serializeObject(), function(err, usr) {
+			if(err) {
+				alert("Sorry, there was a problem.  " + err);
+			} else {
+				alert("Changes saved successfully");
+			}
+		});
+		return false;
+	});
+	var usr = User.getCurrent();
+	for (var prop in usr) {
+		$("#" + prop + "").val(usr[prop]);
+	}
+	$("#password").val("");
+});
+</script>

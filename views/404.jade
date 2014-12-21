@@ -1,0 +1,24 @@
+extends layout_page
+
+block content
+  .row
+    #breadcrumb.col-md-12
+        ol.breadcrumb
+          li
+            a(href='/') Dashboard
+    .row
+      .col-xs-12.text-center.page-404
+        h1 Error 404
+        | &#x9;&#x9;
+        form.form-inline(role='form')
+          h3 Oops, page not found
+          | &#x9;&#x9;&#x9;
+          .input-group
+            input.form-control.input-lg(type='text', placeholder='Try to search right page...')
+            | &#x9;&#x9;&#x9;&#x9;
+            span.input-group-btn
+              button.btn.btn-primary(type='button')
+                i.fa.fa-search
+    script(type='text/javascript').
+      $(document).ready(function() {
+      $('html').animate({scrollTop: 0},'slow');});

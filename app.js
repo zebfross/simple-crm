@@ -9,46 +9,73 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var BearerStrategy = require('passport-http-bearer').Strategy;
+var session = require('express-session')
 var jwt = require('jwt-simple');
+var flash = require('express-flash')
 var User = require('./models/user')
 
-var routes = require('./routes/index')
+var home = require('./routes/home')
 var users = require('./routes/users')
 var clients = require('./routes/clients')
+var comments = require('./routes/comments')
 
 var init = function (config) {
 
-    var app = express();
-    
-    // view engine setup
-    app.set('views', path.join(__dirname, 'views'));
-    app.set('view engine', 'jade');
-    
-    // uncomment after placing your favicon in /public
-    //app.use(favicon(__dirname + '/public/favicon.ico'));
-    app.use(logger('dev'));
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
-    app.use(cookieParser());
-    app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-    app.use(express.static(path.join(__dirname, 'public')));  
+  var app = express();
+  
+  // view engine setup
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'jade');
+  
+  // uncomment after placing your favicon in /public
+  //app.use(favicon(__dirname + '/public/favicon.ico'));
+  app.use(logger('dev'));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(cookieParser());
+  app.use(require('stylus').middleware(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, 'public')));  
+  app.use(session({ 
+    cookie: { maxAge: 60*1000 },
+    secret: 'king zebulon',
+    resave: false,
+    saveUninitialized: false
+    }));
 	app.use(passport.initialize());
+  app.use(passport.session())
+  app.use(flash())
     
-    var mongodbUrl = config.db;
-    console.log('Using MongoDB URL: %s', mongodbUrl);
+  var mongodbUrl = config.db;
+  console.log('Using MongoDB URL: %s', mongodbUrl);
 
-    mongoose.connect(mongodbUrl, function (error) {
-        if (error) {
-            console.error('Could not connect to DB: %s', error);
-            process.exit(1);
-        } else {
-            console.log('successfully connected to mongo');
-        }
-    });
+  mongoose.connect(mongodbUrl, function (error) {
+      if (error) {
+          console.error('Could not connect to DB: %s', error);
+          process.exit(1);
+      } else {
+          console.log('successfully connected to mongo');
+      }
+  });
 
-    mongoose.connection.on('error', function (error) {
-        console.error('MongoDB connection error: %s', error);
-    });
+  mongoose.connection.on('error', function (error) {
+      console.error('MongoDB connection error: %s', error);
+  });
+  
+  passport.serializeUser(function(user, done) {
+    //console.log("serialized: " + user)
+    //done(null, user.id)
+    done(null, user)
+  });
+
+  passport.deserializeUser(function(user, done) {
+    /*console.log("deserializing: " + user)
+    User.findById(user, function(err, usr) {
+      console.log("error: " + err)
+      console.log("user: " + usr)
+      done(null, usr)
+    })*/
+    done(null, user)
+  });
 	
 	passport.use(new LocalStrategy(
 		function(username, password, done) {
@@ -82,35 +109,27 @@ var init = function (config) {
 	  }
 	));
 
-    app.use('/', routes)
-    app.use('/users', users)
+  app.use('/home', home)
+  app.use('/users', users)
 	app.use('/clients', clients)
+	app.use('/comments', comments)
     
-	// Handle 404
-	app.use(function(req, res) {
-	  res.status(404);
-	  res.redirect('/pages/404.html');
-	});
-	// Handle 500
-	app.use(function(error, req, res, next) {
-		res.status(500);
-		res.redirect('/pages/500.html');
-	});
-    // catch 404 and forward to error handler
+    // catch 404
     app.use(function (req, res, next) {
         var err = new Error('Not Found');
         err.status = 404;
-        next(err);
+        res.render("404", {})
     });
     
     // error handlers
     
     // development error handler
     // will print stacktrace
-    if (process.env['env'] === 'Debug') {
+    if (process.env['env'] == 'debug') {
         app.use(function (err, req, res, next) {
+          console.log(err)
             res.status(err.status || 500);
-            res.render('error', {
+            res.render('500', {
                 message: err.message,
                 error: err
             });
@@ -121,7 +140,7 @@ var init = function (config) {
     // no stacktraces leaked to user
     app.use(function (err, req, res, next) {
         res.status(err.status || 500);
-        res.render('error', {
+        res.render('500', {
             message: err.message,
             error: {}
         });

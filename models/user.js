@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 var Client = require('./client')
+var Reminder = require('./reminder')
 var utils = require('./utils')
 
 var supportedProps = ["username","password","display_name","email","days_between_contact"]
@@ -67,7 +68,21 @@ UserSchema.statics.events = function(id, days_between_contact, start, end, done)
 		{anniversary: {$gte: start, $lte: end}},
 		{date_last_contact: {$gte: contactStart, $lte: contactEnd}}
 	]})
-	.exec(done)
+	.exec(function(err, clients) {
+		if(err) {
+			done(err, null)
+		} else {
+			Reminder.where({dismissed: false, owner: id}).sort("date_activated 1").find(function(err, reminders) {
+				if(err) {
+					console.log("error retrieving reminders: " + err)
+					done(null, clients)
+				} else {
+					// TODO: merge these two lists into lists with similar objects
+					done(null, clients.concat(reminders))
+				}
+			})
+		}
+	})
 }
 
 UserSchema.virtual('token').get(function() {

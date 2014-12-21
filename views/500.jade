@@ -1,0 +1,13 @@
+extends layout_page
+
+block content 
+  div.row
+    div#page-500.col-xs-12.text-center
+      h1 Error 500
+      h3= message
+      p= error
+      img(src="/public/images/logo-200.png",alt="")
+      a.btn.btn-default.btn-label-left(href="/")
+        span
+          i.fa.fa-reply
+        |Go to Dashboard

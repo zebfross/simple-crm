@@ -1,7 +1,8 @@
 ﻿'use strict'
 
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
+var Activity = require('./activity')
 var utils = require('./utils')
 
 var supportedProps = ["name_first", "name_last", "phones", "address1", "address2", "city", "state", "zip", "notes", "birthday", "anniversary", "rating", "email"]
@@ -36,9 +37,7 @@ var ClientSchema = new Schema({
 }, { collection: 'crm_clients' });
 
 ClientSchema.statics.create = function(owner, props, done) {
-	console.log(props)
 	props = utils.clean(props, supportedProps)
-	console.log(props)
 	props.owner = owner
 	var client = new Client(props)
 	client.save(done)
@@ -48,6 +47,19 @@ ClientSchema.statics.create = function(owner, props, done) {
 ClientSchema.statics.update = function(id, props, done) {
 	props = utils.clean(props, supportedProps)
 	Client.where({_id: id}).findOneAndUpdate(props, done)
-};
+}
+
+ClientSchema.statics.getById = function(id, done) {
+    Client.findById(id, function (err, client) {
+		if (!err) {
+			Activity.find({client: client._id}, {}, {}, function(err, activities) {
+				client.activities = activities
+				done(null, client)
+			})
+		} else {
+			done(err, null)
+		}
+	})
+}
 
 var Client = module.exports = mongoose.model('Client', ClientSchema);
