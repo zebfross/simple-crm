@@ -14,6 +14,7 @@
 
 module.exports = {
     debug: {
+        name: 'debug',
         db: 'mongodb://root:root@dbh26.mongolab.com:27267/simplecrm',
         root: rootPath,
         notifier: notifier,
@@ -48,6 +49,7 @@ module.exports = {
         }
     },
     test: {
+        name: 'test',
         db: 'mongodb://root:root@dbh26.mongolab.com:27267/simplecrm',
         root: rootPath,
         notifier: notifier,
@@ -82,6 +84,7 @@ module.exports = {
         }
     },
     release: {
+        name: 'release',
         db: 'mongodb://root:root@dbh26.mongolab.com:27267/simplecrm',
         root: rootPath,
         notifier: notifier,
@@ -116,4 +119,3 @@ module.exports = {
         }
     }
 }
-

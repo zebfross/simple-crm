@@ -1,17 +1,19 @@
 var $;
 var Modernizr;
 var isNode = false;
+var Data;
 // in a node environment
 if(typeof $ === 'undefined' && typeof exports !== 'undefined' && this.exports !== exports) {
 	isNode = true;
-	$ = {}
-	$.cookie = {}
-	Modernizr = {}
+	$ = {};
+	$.cookie = {};
+	Modernizr = {};
+	Data = function() {};
 }
 
 var User = function() {};
 var userData = new Data("/users/");
-	
+
 User.setCurrent = function(usr) {
 	$.cookie('access_token', usr.token, {path: '/'});
 	if(Modernizr.localstorage) {

@@ -1,4 +1,5 @@
-﻿var express = require('express');
+﻿
+var express = require('express');
 var router = express.Router();
 var models = require('../models');
 var User = models.User;
@@ -8,135 +9,150 @@ var passport = require('passport');
 var jwt = require('jwt-simple');
 var flash = require('express-flash')
 
-router.param('userid', function (req, res, next, id) {
-	console.log(id)
-    User.findById(id, function (err, usr) {
-      if (!err) {
-        if(!usr) {
-          res.status(404).json({ message: 'user not found'});
+router.param('userid', function(req, res, next, id) {
+    console.log(id)
+    User.findById(id, function(err, usr) {
+        if (!err) {
+            if (!usr) {
+                var err = new Error()
+				err.status = 404
+				next(err)
+            } else {
+                req.target = usr;
+                next();
+            }
         } else {
-          req.target = usr;
-          next();
+            err.status = 500
+			next(err)
         }
-      } else {
-          res.status(500).json({ error: err });
-      }
     });
 });
 
 router.get('/login', function(req, res) {
-  res.render("pages/login", {})
-});
-
-router.get('/unique', function(req, res) {
-	User.findOne({username: req.query.username}, function(err, usr) {
-		if(err || usr)
-			res.json({valid: false});
-		else
-			res.json({valid: true});
-	});
+    res.render("pages/login", {layout: 'web'})
 });
 
 router.get('/logout', function(req, res) {
-  req.logout()
-  res.redirect('/users/login')
+    req.logout()
+    res.redirect('/users/login')
 })
 
-router.post("/", function (req, res) {
-    User.register(req.body, function (err, _usr) {
-		if(err) {return res.status(500).json({error: err});}
-        res.json(_usr); 
+router.get('/register', function(req, res) {
+    res.render('pages/register', {layout: 'web'})
+})
+
+router.post("/", function(req, res, next) {
+    User.register(req.body, function(err, _usr) {
+        if (err) {
+            err.status = 500
+			next(err)
+        } else {
+        	res.redirect('/home')
+		}
     });
 });
 
-router.post('/login', passport.authenticate('local', {session:true, failureRedirect:"/users/login",failureFlash:"Invalid username or password."}), function (req, res) {
-    console.log("got to /users/login")
-  if(req.headers["X-Requested-With"] == "XMLHttpRequest") {
-    console.log("coming from javascript")
-    res.json(req.user);
-  } else {
-    console.log("user: " + req.user)
+router.post('/login', passport.authenticate('local', {
+    session: true,
+    failureRedirect: "/users/login",
+    failureFlash: "Invalid username or password."
+}), function(req, res) {
     res.redirect("/home")
-  }
 });
 
 require('./auth')(router)
 
-router.route('/:id/clients')
-.get(function (req, res) {
-	var skip = req.query.skip || 0;
-	var limit = req.query.limit || -1;
-	var query = {skip: skip}
-	if(limit > 0)
-		query.limit = limit
-    Client.find({ owner: req.params.id }, {}, query, function (err, clients) {
-        if (!err) {
-            res.json(clients)
-        } else {
-            res.status(500).json({ error: err })
+router.route('/:userid/clients')
+    .get(function(req, res, next) {
+        var skip = req.query.skip || 0;
+        var limit = req.query.limit || -1;
+        var query = {
+            skip: skip
         }
-    });
-})
-.post(function(req, res) {
-	Client.create(req.params.id, req.body, function(err, _client) {
-		if(err)
-			return res.status(500).json({message:err})
-		else
-			return res.json(_client)
-	})
-})
+        if (limit > 0)
+            query.limit = limit
+        Client.find({
+            owner: req.params.id
+        }, {}, query, function(err, clients) {
+            if (!err) {
+				res.render('clients/list', {user: req.user, clients: clients})
+            } else {
+                var err = new Error()
+				err.status = 500
+				next(err)
+            }
+        });
+    })
 
 router.get('/:userid/events', function(req, res) {
-	console.log("/userid/events")
-	var start = req.query.start
-	var end = req.query.end
-	console.log(req.query);
-	User.events(req.target._id, req.target.days_between_contact, start, end, function(err, events) {
-		if(err)
-			return res.status(500).json({message: err})
-		else
-			return res.json(events)
+    var start = req.query.start
+    var end = req.query.end
+    console.log(req.query);
+    User.events(req.target._id, req.target.days_between_contact, start, end, function(err, events) {
+        if (err) {
+			var err = new Error()
+			err.status = 500
+			next(err)
+        } else {
+            return res.render('events/list', events)
+    	}
 	})
 })
 
 router.get('/:id/activity', function(req, res) {
-	var limit = req.query.limit || 10
-	var step = req.query.skip || 0
-	Activity.recent(req.params.id, skip, limit, function(err, list) {
-		if(err)
-			res.status(500).json({message: err})
-		else
-			res.json(list)
+    var limit = req.query.limit || 10
+    var step = req.query.skip || 0
+    Activity.recent(req.params.id, skip, limit, function(err, list) {
+        if (err) {
+			var err = new Error()
+			err.status = 500
+			next(err)
+    	} else {
+            return res.render('activities/list', list)
+    	}
 	})
 })
 
 router.post('/authenticate', function(req, res) {
-	res.status(200).send("OK");
+    res.status(200).send("OK");
 });
 
 /* GET user listing */
 router.route('/')
-.get(function (req, res) {
-    User.find({}, {}, { skip: 0, limit: 10 }, function (err, users) {
-        if (!err)
-            res.json(users);
-        else
-            res.status(500).json({ error: err });
-    });
-})
+    .get(function(req, res) {
+        User.find({}, {}, {
+            skip: 0,
+            limit: 10
+        }, function(err, users) {
+            if (!err) {
+                res.json(users);
+            } else {
+                res.status(500).json({
+                    error: err
+                });
+			}
+        });
+    })
 
 /* GET user. */
-router.route('/:userid')
-.get(function (req, res, next) {
-	res.json(req.target);
-})
-.put(function(req, res, next) {
-	User.update(req.target._id, req.body, function(err, usr) {
-		if(err)
-			return res.status(500).json({error: err})
-		else
-			return res.json(usr)
-	})
+router.get('/:userid/details', function(req, res, next) {
+    res.render('users/details', req.user)
 });
+router.route('/:userid/update')
+    .post(function(req, res, next) {
+        User.update(req.target._id, req.body, function(err, usr) {
+            if (err) {
+                var err = new Error()
+    			err.status = 500
+    			next(err)
+            } else {
+                res.render('users/details', {user: usr})
+    		}
+        })
+    })
+    .get(function(req, res, next) {
+        req.target.user = req.user
+        res.render('users/edit', req.target)
+    });
 
 module.exports = router;

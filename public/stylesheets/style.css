@@ -56,6 +56,10 @@ h1, .h1, h2, .h2, h3, .h3 {
   box-shadow: 0 1px 2px #272727;
   z-index: 2000;
 }
+.home-navbar {
+    position: relative;
+    margin-bottom: 20px;
+}
 .body-expanded .navbar {
   z-index: 9;
 }
@@ -1163,7 +1167,7 @@ td.beauty-hover {
   margin-left: 0;
 }
 .toggle-switch input:checked + .toggle-switch-inner + .toggle-switch-switch {
-  right: 0px; 
+  right: 0px;
 }
 .toggle-switch-danger input:checked + .toggle-switch-inner + .toggle-switch-switch {
   border:2px solid #D15E5E;
@@ -1917,9 +1921,9 @@ td.beauty-hover {
 }
 .btn + .dropdown-menu {
   margin-top: -10px;
-  background: rgba(0, 0, 0, 0.7) !important; padding: 0; border: 0; 
-  right: 0; 
-  left: auto; 
+  background: rgba(0, 0, 0, 0.7) !important; padding: 0; border: 0;
+  right: 0;
+  left: auto;
   min-width: 100%;
 }
 .btn + .dropdown-menu > li > a {

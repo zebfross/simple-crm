@@ -1,11 +1,4 @@
-<div class="row">
-	<div id="breadcrumb" class="col-md-12">
-		<ol class="breadcrumb">
-			<li><a class="ajax-link" href="ajax/dashboard.html">Dashboard</a></li>
-			<li><a href="#">Client</a></li>
-		</ol>
-	</div>
-</div>
+
 <div class="row">
 	<div class="col-xs-12 col-sm-12">
 		<div class="box">
@@ -102,7 +95,7 @@ $(document).ready(function() {
 	$("#client-form").bootstrapValidator();
 	// Add drag-n-drop feature to boxes
 	WinMove();
-	$("#client-form").on("success.form.bv", function(e) {
+	/*$("#client-form").on("success.form.bv", function(e) {
 		e.preventDefault();
 		Client.save($(this).serializeObject(), function(err, cli) {
 			if(err) {
@@ -113,13 +106,13 @@ $(document).ready(function() {
 			}
 		});
 		return false;
-	});
-	Client.getActive(function(err, cli) {
+	});*/
+	/*Client.getActive(function(err, cli) {
 		if(cli) {
 			for (var prop in cli) {
 				$("#" + prop + "").val(cli[prop]);
 			}
 		}
-	});
+	});*/
 });
 </script>

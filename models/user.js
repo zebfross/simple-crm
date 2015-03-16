@@ -52,7 +52,7 @@ UserSchema.statics.update = function(id, props, done) {
 			props.password = hash
 		else
 			delete props.password
-		User.where({_id: id}).findOneAndUpdate(props, done)
+		User.findOneAndUpdate({_id: id}, props, done)
 	})
 }
 

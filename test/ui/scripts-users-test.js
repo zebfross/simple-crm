@@ -9,7 +9,7 @@ describe('User Scripts', function() {
 		$.cookie = sinon.spy()
 		$.removeCookie = sinon.spy()
 	})
-	var User = require('../../public/_source/javascripts/user')($)
+	var User = require('../../public/javascripts/user')($)
 	it('should be defined', function() {
 		User.should.be.a.function
 	})

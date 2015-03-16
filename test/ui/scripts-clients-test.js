@@ -7,7 +7,7 @@ describe('Client Scripts', function() {
 	$.fn = {}
 	beforeEach(function() {
 	})
-	var Client = require('../../public/_source/javascripts/client')($)
+	var Client = require('../../public/javascripts/client')($)
 	it('should be defined', function() {
 		Client.should.be.a.function
 	})
@@ -42,9 +42,9 @@ describe('Client Scripts', function() {
 					"state": "state"
 				}
 			]
-			
+
 			var  compressed = Client.compressData(data)
-			
+
 			compressed.length.should.equal(data.length)
 			console.log(compressed)
 			for(var c in compressed) {

@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <span>Name</span><span class="pull-right">Last Contact</span>
+    </div>
+    <div class="list-group">
+        {{#each clients}}
+            <a class="list-group-item" href="/clients/{{_id}}/details">
+                <span>{{name_first}} {{name_last}}</span>
+                <span class="pull-right">{{date_last_contact_formatted}}</span>
+            </a>
+        {{/each}}
+    </div>
+</div>

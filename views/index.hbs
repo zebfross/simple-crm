@@ -1,0 +1,9 @@
+
+<h3>Contacts</h3>
+{{#if clients}}
+    {{> clients/list}}
+{{else}}
+    <div class="help">You don't have any clients yet.
+        <a href="/clients/new">Click here to add your first!</a>
+    </div>
+{{/if}}

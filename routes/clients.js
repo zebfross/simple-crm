@@ -7,40 +7,69 @@ var Activity = models.Activity;
 var passport = require('passport');
 var jwt = require('jwt-simple');
 
+require('./auth')(router)
+
+router.get('/new', function(req, res) {
+    console.log("client/new")
+	return res.render('clients/new', {})
+});
+
+router.post('/', function(req, res) {
+	Client.create(req.user._id, req.body, function(err, obj) {
+		if(err) {
+			throw err
+		} else {
+			res.render('clients/details', obj)
+        }
+    });
+});
+
 router.param('clientid', function (req, res, next, id) {
-	console.log(id)
     Client.getById(id, function (err, client) {
         if (!err) {
 			if(!client) {
-				res.status(404).json({ message: 'user not found'});
+				var err = new Error('Client not found.')
+                err.status = 404
+                next(err);
 			} else {
-				req.target = client;
-				next();
+				if(client.owner == req.user._id) { // TODO: or req.user.isAdmin
+					req.target = client;
+					next();
+				} else {
+					var err = new Error('Unauthorized')
+                    err.status = 403
+                    next(err)
+				}
 			}
         } else {
-            res.status(500).json({ error: err });
+            console.log("error reached")
+            console.log(err)
+            err.status = 500
+            next(err)
 		}
     });
 });
 
-router.all('*', function(req, res, next) {
-	if(req.cookies.access_token) {
-		req.body.access_token = req.cookies.access_token.replace(/\"/g, "")
-	}
-	next()
-}, passport.authenticate('bearer', {session: false}))
-
 /* GET client. */
-router.route('/:clientid')
+router.route('/:clientid/details')
 .get(function (req, res, next) {
-	res.json(req.target);
+    req.target.user = req.user
+	res.render('clients/details', req.target)
+});
+router.route('/:clientid/update')
+.get(function(req, res) {
+    req.target.user = req.user;
+    res.render('clients/edit', req.target)
 })
-.put(function(req, res, next) {
+.post(function(req, res, next) {
+    console.log(req.body)
 	Client.update(req.target._id, req.body, function(err, obj) {
-		if(err)
-			return res.status(500).json({error: err})
-		else
-			return res.json(obj)
+		if(err) {
+			throw err
+		} else {
+            obj.user = req.user
+			return res.render('clients/details', obj)
+        }
 	})
 });
 
