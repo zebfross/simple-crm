@@ -1,0 +1,8 @@
+
+<form id="comment-form" class="form" action="/comments" method="post">
+    <label>Add a comment</label>
+    <input type="hidden" name="client" value="{{_id}}"></input>
+    <input type="hidden" name="activity_type" value="comment"></input>
+    <textarea name="comment" rows="4" cols="50" style="width:100%;"></textarea>
+    <button type="submit" class="btn btn-primary"><span class="fa fa-comment"></span> Comment</button>
+</form>

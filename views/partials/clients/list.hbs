@@ -1,13 +1,20 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <span>Name</span><span class="pull-right">Last Contact</span>
-    </div>
-    <div class="list-group">
-        {{#each clients}}
-            <a class="list-group-item" href="/clients/{{_id}}/details">
-                <span>{{name_first}} {{name_last}}</span>
-                <span class="pull-right">{{date_last_contact_formatted}}</span>
-            </a>
-        {{/each}}
-    </div>
+<div class="table-responsive">
+<table class="table table-hover clients-table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Last Contact</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#clients}}
+        <tr class="clickable" data-url="/clients/{{_id}}/details">
+            <td>{{name_first}} {{name_last}}</td>
+            <td>{{rating}}</td>
+            <td>{{date_last_contact_formatted}}</td>
+        </tr>
+        {{/clients}}
+    </tbody>
+</table>
 </div>

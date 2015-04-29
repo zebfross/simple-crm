@@ -49,6 +49,12 @@
 			models: {
 				src: ["test/models/*.js"]
 			}
+		},
+		open : {
+		    dev : {
+		      path: 'http://localhost:3000/',
+		      app: 'Firefox'
+		    }
 		}
     });
 
@@ -57,11 +63,12 @@
 	grunt.loadNpmTasks('grunt-harp');
 	grunt.loadNpmTasks('grunt-exec');
 	grunt.loadNpmTasks('grunt-simple-mocha');
+	grunt.loadNpmTasks('grunt-open');
 
     // Default task(s).
     grunt.registerTask('default', ['compile']);
 
-	grunt.registerTask('test', ['simplemocha:all'])
-	grunt.registerTask('run', ['exec:run'])
+	grunt.registerTask('test', ['simplemocha:all']);
+	grunt.registerTask('run', ['exec:run']);
 
 };

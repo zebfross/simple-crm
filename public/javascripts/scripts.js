@@ -86,3 +86,6 @@ $(function() {
 		setReminders(reminders);
 	}
 });*/
+$(".clickable").on("click", function(e) {
+    window.location = $(this).data("url");
+});

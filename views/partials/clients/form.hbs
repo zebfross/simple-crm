@@ -17,7 +17,7 @@
 
             <div class="box-content">
                 <h4 class="page-header">Client<i class="fa fa-pencil"></i></h4>&#x9;&#x9;&#x9;&#x9;
-                <form method="POST" class="form-horizontal" id="client-form" name="client-form"
+                <form method="POST" class="form-horizontal" id="client-form" data-toggle="validator" name="client-form"
                     {{#if _id}}
                         action="/clients/{{_id}}/update"
                     {{else}}
@@ -26,11 +26,12 @@
                     <input id="_id" name="_id" type="hidden" value="{{_id}}">&#x9;&#x9;&#x9;&#x9;&#x9;
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">First Name
+                        <label class="col-sm-2 control-label">First Name <span class="required" />
                         </label>&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
 
                         <div class="col-sm-4">
-                            <input class="form-control" data-placement="bottom" data-toggle="tooltip" id="name_first" name="name_first" placeholder="First Name" type="text" value="{{name_first}}">
+                            <input class="form-control" data-placement="bottom" required data-toggle="tooltip" id="name_first" name="name_first" placeholder="First Name" type="text" value="{{name_first}}">
+                            <div class="help-block with-errors"></div>
                         </div>&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                         <label class="col-sm-2 control-label">Last Name
                         </label>&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
@@ -49,7 +50,7 @@
                         <label class="col-sm-2 control-label">Phone</label>&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
 
                         <div class="col-sm-4">
-                            <input class="form-control" id="phones_0_number" name="phones[0].number" placeholder="Phone Number" type="text" value="{{phones.0.number}}">
+                            <input class="form-control" id="phones_0_number" name="phones[0][number]" placeholder="Phone Number" type="text" value="{{phones.0.number}}">
                         </div>
                     </div>&#x9;&#x9;&#x9;&#x9;&#x9;
 
@@ -71,6 +72,7 @@
 
                         <div class="col-sm-4">
                             <input class="form-control" id="rating" name="rating" placeholder="Rating" type="number" value="{{rating}}">
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>&#x9;&#x9;&#x9;&#x9;&#x9;
 
@@ -85,9 +87,15 @@
                     <div class="clearfix"></div>&#x9;&#x9;&#x9;&#x9;&#x9;
 
                     <div class="form-group">
-                        <div class="col-sm-2">
-                            <button class="btn btn-primary btn-label-left" type="submit">
-                                <span class="fa fa-clock-o" style="font-style: italic"></span>&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;Save</button>
+                        <div class="col-sm-4">
+                            <a class="btn btn-default btn-label-left"
+                                {{#if _id}}
+                                    href="/clients/{{_id}}/details"
+                                {{else}}
+                                    href="/home"
+                                {{/if}}
+                            >Cancel</a>
+                            <button class="btn btn-primary btn-label-left" type="submit">Save</button>
                         </div>
                     </div>
                 </form>

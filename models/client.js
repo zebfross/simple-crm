@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
-var Activity = require('./activity')
+var Activity
 var utils = require('./utils')
 var moment = require('moment')
 
@@ -10,11 +10,11 @@ var supportedProps = ["name_first", "name_last", "phones", "address1", "address2
 
 var ClientSchema = new Schema({
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
-    name_first: String,
+    name_first: {type: String, required: true},
     name_last: String,
     email: String,
     phones: [{
-            type: String,
+            phone_type: String,
             number: String
         }],
     address1: String,
@@ -36,7 +36,7 @@ var ClientSchema = new Schema({
     recent_activity: [{
             date_created: Date,
             comment: String,
-            type: String
+            activity_type: String
     }]
 }, { collection: 'crm_clients' });
 
@@ -54,13 +54,17 @@ ClientSchema.statics.create = function(owner, props, done) {
 
 ClientSchema.statics.update = function(id, props, done) {
 	props = utils.clean(props, supportedProps)
+    console.log(props)
 	Client.findOneAndUpdate({_id: id}, props, done)
 }
 
 ClientSchema.statics.getById = function(id, done) {
+    if(Activity === undefined)
+        Activity = new require("./activity")
     Client.findById(id, function (err, client) {
 		if (!err) {
-			Activity.find({client: client._id}, {}, {}, function(err, activities) {
+			Activity.find({client: client._id}, {}, {}).
+            sort({date_created: 'desc'}).exec(function(err, activities) {
 				client.activities = activities
 				done(null, client)
 			})
@@ -80,5 +84,4 @@ ClientSchema.statics.listForUser = function(id, done) {
         }
     })
 }
-
 var Client = module.exports = mongoose.model('Client', ClientSchema);

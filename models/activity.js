@@ -5,14 +5,14 @@ var Schema = mongoose.Schema;
 var utils = require('./utils')
 var Client = require('./client')
 
-var supportedProps = ["comment", "owner", "client", "type"]
+var supportedProps = ["comment", "client", "activity_type"]
 
 var ActivitySchema = new Schema({
     date_created: { type: Date, default: Date.now },
     client: { type: Schema.Types.ObjectId, ref: 'Client' },
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
     comment: String,
-    type: String
+    activity_type: String
 }, { collection: 'crm_activities' });
 
 ActivitySchema.statics.recent = function(id, skip, limit, done) {
@@ -24,16 +24,11 @@ ActivitySchema.statics.save = function(props, done) {
 	props = utils.clean(props, supportedProps)
 	console.log("cleaned props: " + JSON.stringify(props))
 	var act = new Activity(props)
-	// act.save(function(err, cli) {
-		
-	// })
-	try {
-	Client.findByIdAndUpdate(act.client, {date_last_contact: Date.now}, {}, function(err, cli) {
-		console.log(JSON.stringify(err || cli))
-			})	
-	} catch (e) {
-		console.log(e)
-	}
+	act.save(function(err, a) {
+    	Client.findOneAndUpdate({_id: act.client}, {date_last_contact: Date.now()}, function(err, cli) {
+    		done(err, a)
+		})
+	})
 	return act
 }
 

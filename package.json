@@ -36,6 +36,7 @@
     "grunt-contrib-copy": "^0.7.0",
     "grunt-exec": "^0.4.6",
     "grunt-harp": "^0.1.4",
+    "grunt-open": "^0.2.3",
     "grunt-preen": "^1.1.0",
     "grunt-simple-mocha": "^0.4.0",
     "grunt-wiredep": "^1.9.0",
