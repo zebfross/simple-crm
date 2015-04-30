@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "grunt test",
-    "start": "grunt run"
+    "test": "npm test",
+    "start": "node bin/www"
   },
   "description": "SimpleCrm",
   "author": {
