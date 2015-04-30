@@ -70,5 +70,6 @@
 
 	grunt.registerTask('test', ['simplemocha:all']);
 	grunt.registerTask('run', ['exec:run']);
+    grunt.registerTask('heroku', ['exec:run']);
 
 };
