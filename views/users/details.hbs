@@ -1,0 +1,40 @@
+<h2>{{user.display_name}}</h2>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div><label>Email: </label> {{email}}</div>
+                <div><label>Phone: </label> {{phones.0.number}}</div>
+                <div><label>Rating: </label> {{rating}}</div>
+            </div>
+            <div class="col-md-4">
+                <div><label>City: </label> {{city}}</div>
+                <div><label>State: </label> {{state}}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <label>Notes: </label> {{notes}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="panel-title">Contact History &amp; Comments</div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-8">
+                {{> activities/form}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{> activities/list}}
+            </div>
+        </div>
+    </div>
+</div>
