@@ -48,11 +48,11 @@
     <header class="navbar">
         <div class="container-fluid expanded-panel">
             <div class="row">
-                <div id="logo" class="col-xs-12 col-sm-2"><a href="/home">DevOOPS</a></div>
+                <div id="logo" class="col-xs-12 col-sm-2"><a href="/home">Simple-CRM</a></div>
                 <div id="top-panel" class="col-xs-12 col-sm-10">
                     <div class="row">
                         <div class="col-xs-8 col-sm-4"><a href="#" class="show-sidebar"><i class="fa fa-bars"></i></a>
-                            <div id="search">
+                            <div id="page-search" class="search">
                                 <input type="text" placeholder="search"><i class="fa fa-search"></i></div>
                         </div>
                         <div class="col-xs-4 col-sm-8 top-panel-right">
@@ -68,11 +68,8 @@
                                         </div>
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="ajax/profile.html" class="ajax-link"><i class="fa fa-user"></i><span>Profile</span></a></li>
+                                        <li><a href="/users/{{user._id}}/details"><i class="fa fa-user"></i><span>Profile</span></a></li>
                                         <li><a href="ajax/page_messages.html" class="ajax-link"><i class="fa fa-envelope"></i><span>Messages</span></a></li>
-                                        <li><a href="ajax/gallery_simple.html" class="ajax-link"><i class="fa fa-picture-o"></i><span>Albums</span></a></li>
-                                        <li><a href="ajax/calendar.html" class="ajax-link"><i class="fa fa-tasks"></i><span>Tasks</span></a></li>
-                                        <li><a href="#"><i class="fa fa-cog"></i><span>Settings</span></a></li>
                                         <li><a id="logout" href="/users/logout"><i class="fa fa-power-off"></i><span>Logout</span></a></li>
                                     </ul>
                                 </li>
@@ -107,7 +104,11 @@
     <!-- bower:js-->
     <script src="/plugins/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/plugins/bootstrap-validator/dist/validator.js"></script>
-    <script src="/plugins/tablesorter/jquery.tablesorter.js"></script>
+    <script src="/plugins/jquery.tablesorter/dist/js/jquery.tablesorter.js"></script>
+    <script src="/plugins/jquery.tablesorter/dist/js/widgets/widget-pager.min.js"></script>
+    <script src="/plugins/jquery.tablesorter/dist/js/widgets/widget-filter.min.js"></script>
+    <link href="/plugins/jquery.tablesorter/dist/css/theme.blue.min.css" rel="stylesheet" />
+    <link href="/plugins/jquery.tablesorter/dist/css/jquery.tablesorter.pager.min.css" rel="stylesheet" />
     <!--<script src="/plugins/d3/d3.js"></script>
     <script src="/plugins/datatables/media/js/jquery.dataTables.js"></script>
     <script src="/plugins/jquery-knob/js/jquery.knob.js"></script>
@@ -137,6 +138,7 @@
     <script src="/javascripts/client.js"></script>
     <script src="/javascripts/scripts.js"></script>
     <script type="text/javascript">
+        initUserPicture("{{user.email}}");
         /*var _logout = function() {
         User.logout();
           };

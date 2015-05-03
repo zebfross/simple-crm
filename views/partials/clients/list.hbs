@@ -1,20 +1,87 @@
+
+
 <div class="table-responsive">
-<table class="table table-hover clients-table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Rating</th>
-            <th>Last Contact</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#clients}}
-        <tr class="clickable" data-url="/clients/{{_id}}/details">
-            <td>{{name_first}} {{name_last}}</td>
-            <td>{{rating}}</td>
-            <td>{{date_last_contact_formatted}}</td>
-        </tr>
-        {{/clients}}
-    </tbody>
-</table>
+    <h3 style="display:inline;">Contacts </h3>
+    <div class="search pull-right">
+        <input id="clients-search" type="search" data-column="all" placeholder="search">
+        <i class="clients-reset fa fa-close fa-lg" style="color: black;"></i>
+    </div>
+    <table id="clients-table" class="table table-hover tablesorter">
+        <thead>
+            <tr>
+                <th>F Name</th>
+                <th>L Name</th>
+                <th>Rating</th>
+                <th>Last Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#clients}}
+            <tr class="clickable" data-url="/clients/{{_id}}/details">
+                <td><span class="text">{{name_first}}</span></td>
+                <td><span class="text">{{name_last}}</span></td>
+                <td><span class="text">{{rating}}</span></td>
+                <td>{{date_last_contact_formatted}} <span class="hide text">{{formatDate date_last_contact ""}}</span></td>
+            </tr>
+            {{/clients}}
+        </tbody>
+    </table>
+    <div id="clients-table-pager" class="pager">
+        <form>
+    		<span class="first fa fa-step-backward clickable"></span>
+    		<span class="prev fa fa-backward clickable"></span>
+    		<span class="pagedisplay"></span>
+    		<span class="next fa fa-forward clickable"></span>
+    		<span class="last fa fa-step-forward clickable"></span>
+    		<select class="pagesize hide">
+    			<option selected="selected"  value="15">15</option>
+    			<option value="20">20</option>
+    			<option value="30">30</option>
+    			<option  value="40">40</option>
+    		</select>
+    	</form>
+    </div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        var $table = $("#clients-table").tablesorter({
+            theme: 'blue',
+            widthFixed: false,
+            widgets: ["filter", "pager"],
+            headers: {3: {sorter: "usLongDate"}},
+            textExtraction: function(node) {
+                return $(node).children(".text").text();
+            },
+            dateFormat: "iso",
+            widgetOptions: {
+                filter_external : $("#clients-search"),
+                filter_defaultFilter: {
+                    0: '~{query}',
+                    1: '~{query}'
+                },
+                filter_columnFilters: false,
+                filter_saveFilters: true,
+                filter_reset: '.clients-reset',
+                pager_output: '{startRow} to {endRow} of {totalRows}',
+                pager_container: $("#clients-table-pager"),
+                pager_size: 15,
+                pager_pagerPositionSet: true,
+                pager_positionFixed: false,
+                pager_seperator: " of "
+            }
+        });
+        /*$("#clients-search").change(function() {
+            var $this = $(this),
+                totalColumns = $table[0].config.columns,
+                filter = [];
+
+            filter[totalColumns] = $this.text();
+            $table.trigger('search', [filter]);
+            return false;
+        })
+        $("#clients-search-form").submit(function(){
+            return false;
+        })*/
+    });
+</script>

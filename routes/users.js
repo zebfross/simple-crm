@@ -75,7 +75,7 @@ router.route('/:userid/clients')
             owner: req.params.id
         }, {}, query, function(err, clients) {
             if (!err) {
-				res.render('clients/list', {user: req.user, clients: clients})
+				res.render('clients/list', {clients: clients})
             } else {
                 var err = new Error()
 				err.status = 500
@@ -136,7 +136,7 @@ router.route('/')
 
 /* GET user. */
 router.get('/:userid/details', function(req, res, next) {
-    res.render('users/details', req.user)
+    res.render('users/details', {user: req.user})
 });
 router.route('/:userid/update')
     .post(function(req, res, next) {
@@ -152,7 +152,7 @@ router.route('/:userid/update')
     })
     .get(function(req, res, next) {
         req.target.user = req.user
-        res.render('users/edit', req.target)
+        res.render('users/edit', {user: req.target})
     });
 
 module.exports = router;

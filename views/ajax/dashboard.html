@@ -98,7 +98,7 @@
 					</tr>
 				</thead>
 				<tbody class="clickable">
-					
+
 				</tbody>
 			</table>
 		</div>
@@ -295,13 +295,13 @@ $(document).ready(function() {
 	LoadMorrisScripts(MorrisDashboard);
 	// Make beauty hover in table
 	$("#ticker-table").beautyHover();
-	
-	$("#clients-table").on("click", "tbody tr", function(e) {
+
+	/*$("#clients-table").on("click", "tbody tr", function(e) {
 		var id = $(this).children().first().text();
 		Client.activeId = id;
 		LoadAjaxContent("/ajax/client_details.html");
-	});
-	
+	});*/
+
 	User.clients(User.getCurrent()._id, 0, -1, function(err, clients) {
 		var data = Client.compressData(clients);
 		$("#clients-table").dataTable({
@@ -309,7 +309,7 @@ $(document).ready(function() {
 			"initComplete": function() {
 				var api = this.api();
 				api.$("tr").on("click", function(e) {
-				
+
 				});
 			}
 		});

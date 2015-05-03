@@ -86,6 +86,21 @@ $(function() {
 		setReminders(reminders);
 	}
 });*/
+var initUserPicture = function(email, selector) {
+    if(!selector)
+        selector = ".avatar";
+    if(!email)
+        email = "";
+    var hash = md5(email.trim().toLowerCase());
+    var avatar = "http://www.gravatar.com/avatar/" + hash;
+    var img = '<img src="' + avatar + '" class="img-rounded" alt="avatar" />';
+    $(img).load(function() {
+        $(selector).html(img);
+    });
+    //$(selector).html("<i class='fa fa-user' style='margin-top:4px' />");
+};
 $(".clickable").on("click", function(e) {
-    window.location = $(this).data("url");
+    var url = $(this).data("url");
+    if(url != undefined)
+        window.location = $(this).data("url");
 });

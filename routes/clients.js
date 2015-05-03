@@ -67,8 +67,7 @@ router.route('/:clientid/update')
 		if(err) {
 			throw err
 		} else {
-            obj.user = req.user
-			return res.render('clients/details', obj)
+			return res.redirect("/clients/" + req.target._id + '/details')
         }
 	})
 });

@@ -1,6 +1,22 @@
+body {
+    overflow: scroll;
+}
+
 .page-content {
     background-color: #ebebeb;
     margin-left: 20px;
     margin-right: 20px;
     padding: 20px;
+}
+
+.search > input {
+    margin-top: 8px;
+}
+
+.search > input + i {
+    top: 16px;
+}
+
+#clients-search {
+    margin-bottom: 3px;
 }

@@ -1,7 +1,13 @@
-{{#activities}}
-    <div>
-        <strong>{{activity_type}} on {{formatDate date_created "M/D"}}</strong>
-        <br />
-        {{comment}}
-    </div>
-{{/activities}}
+<table class="table table-striped">
+    <tbody>
+    {{#activities}}
+        <tr>
+            <td>
+                <strong>{{activity_type}} on {{formatDate date_created "M/D"}}</strong>
+                <br />
+                {{comment}}
+            </td>
+        </tr>
+    {{/activities}}
+    </tbody>
+</table>

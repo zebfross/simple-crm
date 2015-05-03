@@ -9,10 +9,6 @@ body {
 .clickable {
 	cursor: pointer;
 }
-#clients-table tr *:nth-child(1)
-{
-	display:none;
-}
 .required:before {
     content: '*';
     color:red;
@@ -194,11 +190,11 @@ a.show-sidebar:hover {
   min-height: 800px;
   overflow: hidden;
 }
-#search {
+.search {
   position: relative;
   margin-left: 20px;
 }
-#search > input {
+.search > input {
   width: 80%;
   background: #dfdfdf;
   border: 1px solid #C7C7C7;
@@ -215,7 +211,7 @@ a.show-sidebar:hover {
   -o-transition: 0.2s;
   transition: 0.2s;
 }
-#search > input + i {
+.search > input + i {
   opacity:0;
   position: absolute;
   top: 18px;
@@ -226,11 +222,11 @@ a.show-sidebar:hover {
   -o-transition: 0.4s;
   transition: 0.4s;
 }
-#search > input:focus {
+.search > input:focus {
   width:100%;
   outline:none;
 }
-#search > input:focus + i {
+.search > input:focus + i {
   opacity:1;
 }
 .panel-menu {

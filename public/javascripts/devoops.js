@@ -2418,7 +2418,7 @@ $(document).ready(function () {
 	$('#ajax-content').on('click', 'a', function(e) {
 		ajaxLink.call(this, e);
 	});
-	$('#search').on('keydown', function(e){
+	$('#page-search').on('keydown', function(e){
 		if (e.keyCode == 13){
 			e.preventDefault();
 			$('#content').removeClass('full-content');

@@ -1,4 +1,4 @@
-﻿
+``﻿
 var express = require('express');
 var router = express.Router();
 var path = require('path');
@@ -52,6 +52,18 @@ var init = function(config) {
     app.use(passport.initialize());
     app.use(passport.session())
     app.use(flash())
+    app.use( function( req, res, next ) {
+        var _render = res.render;
+        res.render = function( view, options, fn ) {
+            if(req.user && !res.user) {
+                if(options == null)
+                    options = {}
+                options.user = req.user;
+            }
+            _render.call( this, view, options, fn );
+        }
+        next();
+    });
 
     var mongodbUrl = config.db;
     console.log('Using MongoDB URL: %s', mongodbUrl);

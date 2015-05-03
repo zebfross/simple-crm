@@ -9,7 +9,7 @@ require('./auth')(router)
 /* GET home page. */
 router.get('/', function (req, res) {
     Client.listForUser(req.user._id, function(err, clients) {
-        res.render('index', { user: req.user, clients: clients });
+        res.render('index', { clients: clients });
     });
 });
 
