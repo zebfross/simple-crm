@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "test": "npm test",
-    "start": "node bin/www"
+    "start": "node bin/www",
+    "postinstall": "bower install"
   },
   "description": "SimpleCrm",
   "author": {

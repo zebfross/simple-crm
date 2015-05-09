@@ -10,9 +10,7 @@
                 // Point to the files that should be updated when
                 // you run `grunt wiredep`
                 src: [
-                    'public/**/*.html',   // .html support...
-					'public/**/*.jade',
-                    'app/config.yml'         // and .yml & .yaml support out of the box!
+					'views/layouts/*.hbs'
                 ],
 
                 options: {
@@ -20,6 +18,8 @@
                       // you may pass:
 
                       // https://github.com/taptapship/wiredep#configuration
+                      exclude: ['plugins/jquery/', 'plugins/modernizr/'],
+                      ignorePath: '../../public'
                 }
             }
         },

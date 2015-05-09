@@ -14,7 +14,6 @@ $.fn.serializeObject = function()
     });
     return o;
 };
-$.cookie.json = true;
 
 function ProfileFormValidator(){
 	$('#profile-form').bootstrapValidator({

@@ -151,7 +151,6 @@ router.route('/:userid/update')
         })
     })
     .get(function(req, res, next) {
-        req.target.user = req.user
         res.render('users/edit', {user: req.target})
     });
 
