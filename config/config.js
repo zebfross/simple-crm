@@ -23,6 +23,7 @@ module.exports = {
         root: rootPath,
         notifier: notifier,
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
+        viewPath: 'views',
         app: {
             name: 'Simple CRM'
         },
@@ -57,6 +58,7 @@ module.exports = {
         db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
         root: rootPath,
         notifier: notifier,
+        viewPath: 'views',
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
         app: {
             name: 'Simple CRM'
@@ -92,6 +94,7 @@ module.exports = {
         db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
         root: rootPath,
         notifier: notifier,
+        viewPath: '../views',
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
         app: {
             name: 'Simple CRM'

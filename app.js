@@ -32,7 +32,8 @@ var init = function(config) {
         extname: 'hbs',
         helpers: helpers
     }))
-    app.set('views', path.join(__dirname, 'views'));
+    
+    app.set('views', path.join(__dirname, config.viewPath));
     app.set('view engine', 'hbs');
 
     // uncomment after placing your favicon in /public
