@@ -1,0 +1,9 @@
+/************
+// AUTO-GENERATED
+************/
+
+function {{name}}() {
+
+}
+
+Module.exports = {{name}};

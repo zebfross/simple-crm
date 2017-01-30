@@ -5,7 +5,7 @@
 			<a href="login.html" class="txt-default">Already have an account?</a>
 		</div>
 		<div class="box">
-			<form id="register-form" class="box-content" action="/users/register">
+			<form id="register-form" class="box-content" method="POST" action="/users">
 				<div class="text-center">
 					<h3 class="page-header">DevOOPS Register Page</h3>
 				</div>
@@ -61,10 +61,10 @@
 			$("#register-form").bootstrapValidator();
 		});
 
-		$("#register-form").on("success.form.bv", function(e) {
+		/*$("#register-form").on("success.form.bv", function(e) {
 			e.preventDefault();
-			User.register($(this).serializeObject());
+
 			return false;
-		});
+		});*/
 	});
 </script>

@@ -1,0 +1,46 @@
+{
+    "activity": {
+        "name": "Activity",
+        "properties": {
+            "date_created": {
+                "type": "date",
+                "writableFromClient": false
+            },
+            "client": {
+                "type": "ID"
+            },
+            "owner": {
+                "type": "ID",
+                "writableFromClient": false
+            }
+        }
+    },
+    "alert": {
+        "name": "Alert"
+    },
+    "client": {
+        "name": "Client",
+        "properties": {
+            "date_created": {
+                "type": "date",
+                "writableFromClient": false
+            },
+            "owner": {
+                "type": "ID",
+                "writableFromClient": false
+            },
+            "name_first": {
+                "type": "string"
+            },
+            "name_last": {
+                "type": "string"
+            }
+        }
+    },
+    "reminder": {
+        "name": "Reminder"
+    },
+    "user": {
+        "name": "User"
+    }
+}

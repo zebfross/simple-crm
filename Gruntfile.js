@@ -60,7 +60,6 @@
 
     grunt.loadNpmTasks('grunt-wiredep');
     grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-harp');
 	grunt.loadNpmTasks('grunt-exec');
 	grunt.loadNpmTasks('grunt-simple-mocha');
 	grunt.loadNpmTasks('grunt-open');

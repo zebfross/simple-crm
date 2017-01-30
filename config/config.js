@@ -12,10 +12,14 @@
         parseApiKey: 'PARSE_MASTER_KEY'
     }
 
+function createDbConnectionString(host, dbname) {
+    return "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@" + host + "/" + dbname;
+}
+
 module.exports = {
     debug: {
         name: 'debug',
-        db: 'mongodb://root:root@dbh26.mongolab.com:27267/simplecrm',
+        db: "mongodb://zebfross:zebfross@ds131729.mlab.com:31729/simplecrm",
         root: rootPath,
         notifier: notifier,
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
@@ -50,7 +54,7 @@ module.exports = {
     },
     test: {
         name: 'test',
-        db: 'mongodb://root:root@dbh26.mongolab.com:27267/simplecrm',
+        db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
         root: rootPath,
         notifier: notifier,
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
@@ -85,7 +89,7 @@ module.exports = {
     },
     release: {
         name: 'release',
-        db: 'mongodb://root:root@dbh26.mongolab.com:27267/simplecrm',
+        db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
         root: rootPath,
         notifier: notifier,
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',

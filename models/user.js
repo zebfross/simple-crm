@@ -37,6 +37,7 @@ UserSchema.statics.hash = function(pass, done) {
 
 UserSchema.statics.register = function(props, done) {
 	props = utils.clean(props, supportedProps)
+  console.log("registering user " + JSON.stringify(props))
 	var usr = new User(props);
 	User.hash(props.password, function(err, hash) {
 		usr.password = hash;

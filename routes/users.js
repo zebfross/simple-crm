@@ -42,10 +42,12 @@ router.get('/register', function(req, res) {
 })
 
 router.post("/", function(req, res, next) {
+
     User.register(req.body, function(err, _usr) {
+      console.log("registered user " + JSON.stringify(_usr) + " " + JSON.stringify(err))
         if (err) {
             err.status = 500
-			next(err)
+	          next(err)
         } else {
         	res.redirect('/home')
 		}
