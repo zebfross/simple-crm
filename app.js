@@ -12,7 +12,7 @@ var BearerStrategy = require('passport-http-bearer').Strategy;
 var session = require('cookie-session')
 var jwt = require('jwt-simple');
 var flash = require('express-flash')
-var hbs = require('express3-handlebars')
+var exphbs = require('express-handlebars')
 var helpers = require('./views/helpers')
 var User = require('./models/user')
 
@@ -27,14 +27,17 @@ var init = function(config) {
     var app = express();
 
     // view engine setup
-    app.engine('hbs', hbs({
-        defaultLayout: 'main',
-        extname: 'hbs',
-        helpers: helpers
-    }))
+    //var hbs = exphbs.create({})
+    //hbs.extname = '.hbs'
+    //app.engine('handlebars', hbs.engine)
     
-    app.set('views', path.join(__dirname, config.viewPath));
-    app.set('view engine', 'hbs');
+    //app.set('views', path.join(__dirname, config.viewPath));
+    app.engine('.hbs', exphbs({
+        defaultLayout: 'main',
+        extname: '.hbs',
+        helpers: helpers
+    }));
+    app.set('view engine', '.hbs');
 
     // uncomment after placing your favicon in /public
     //app.use(favicon(__dirname + '/public/favicon.ico'));
