@@ -19,7 +19,7 @@ function createDbConnectionString(host, dbname) {
 module.exports = {
     debug: {
         name: 'debug',
-        db: "mongodb://zebfross:zebfross@ds131729.mlab.com:31729/simplecrm",
+        db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
         root: rootPath,
         notifier: notifier,
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
