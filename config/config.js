@@ -12,14 +12,10 @@
         parseApiKey: 'PARSE_MASTER_KEY'
     }
 
-function createDbConnectionString(host, dbname) {
-    return "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@" + host + "/" + dbname;
-}
-
 var options = {
     debug: {
         name: 'debug',
-        db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
+        db: "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@ds131729.mlab.com:31729/simplecrm",
         root: rootPath,
         notifier: notifier,
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
@@ -55,7 +51,7 @@ var options = {
     },
     test: {
         name: 'test',
-        db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
+        db: "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@ds131729.mlab.com:31729/simplecrm",
         root: rootPath,
         notifier: notifier,
         viewPath: '.',
@@ -91,7 +87,7 @@ var options = {
     },
     release: {
         name: 'release',
-        db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
+        db: "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@ds056669-a0.mlab.com:56669,ds056669-a1.mlab.com:56662/simple-crm-1?replicaSet=rs-ds056669",
         root: rootPath,
         notifier: notifier,
         viewPath: '..',
