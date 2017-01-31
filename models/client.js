@@ -5,6 +5,7 @@ var Schema = mongoose.Schema
 var Activity
 var utils = require('./utils')
 var moment = require('moment')
+var logger = require('../server/logger')
 
 var supportedProps = ["name_first", "name_last", "phones", "address1", "address2", "city", "state", "zip", "notes", "birthday", "anniversary", "rating", "email"]
 
@@ -54,7 +55,7 @@ ClientSchema.statics.create = function(owner, props, done) {
 
 ClientSchema.statics.update = function(id, props, done) {
 	props = utils.clean(props, supportedProps)
-    console.log(props)
+    logger.info(props)
 	Client.findOneAndUpdate({_id: id}, props, done)
 }
 
@@ -77,7 +78,7 @@ ClientSchema.statics.getById = function(id, done) {
 ClientSchema.statics.listForUser = function(id, done) {
     Client.find({owner: id}, function(err, clients) {
         if(err) {
-            console.log(err);
+            logger.info(err);
             done(null, [])
         } else {
             done(null, clients)

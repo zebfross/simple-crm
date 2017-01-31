@@ -4,6 +4,7 @@ var passport = require('passport')
 var models = require('../models');
 var Activity = models.Activity;
 var email = require('emailjs')
+var logger = require('../server/logger')
 var server = email.server.connect({
 	user: "zeb+zebfross.com",
 	password: "fEz5_leARs",
@@ -12,7 +13,7 @@ var server = email.server.connect({
 })
 
 router.post("/incoming-email", function(req, res) {
-	console.log("post to /incoming-email")
+	logger.info("post to /incoming-email")
 	var msg = JSON.stringify(req.body)
 	server.send({
 		text: msg,
@@ -31,11 +32,11 @@ router.post("/incoming-email", function(req, res) {
 require('./auth')(router)
 
 router.post("/", function(req, res) {
-	console.log("post to /comments")
+	logger.info("post to /comments")
 	req.body.owner = req.user._id
 	Activity.save(req.body, function(err, obj) {
 		if(err) {
-			console.log("error: " + err)
+			logger.info("error: " + err)
 		}
 		return res.redirect("/clients/" + req.body.client + "/details")
 	})

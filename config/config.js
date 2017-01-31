@@ -16,7 +16,7 @@ function createDbConnectionString(host, dbname) {
     return "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@" + host + "/" + dbname;
 }
 
-module.exports = {
+var options = {
     debug: {
         name: 'debug',
         db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
@@ -126,3 +126,14 @@ module.exports = {
         }
     }
 }
+
+var env = process.env['env'] || "debug";
+env = env.toLowerCase();
+
+console.log("env: " + env)
+if (env == 'debug')
+    module.exports = options['debug'];
+else if (env == 'release')
+    module.exports = options['release'];
+else if (env == 'test')
+    module.exports = options['test'];

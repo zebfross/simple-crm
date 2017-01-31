@@ -6,6 +6,7 @@ var bcrypt = require('bcrypt-nodejs');
 var Client = require('./client')
 var Reminder = require('./reminder')
 var utils = require('./utils')
+var logger = require('../server/logger')
 
 var supportedProps = ["username","password","display_name","email","days_between_contact"]
 
@@ -37,7 +38,7 @@ UserSchema.statics.hash = function(pass, done) {
 
 UserSchema.statics.register = function(props, done) {
 	props = utils.clean(props, supportedProps)
-  console.log("registering user " + JSON.stringify(props))
+  logger.info("registering user " + JSON.stringify(props))
 	var usr = new User(props);
 	User.hash(props.password, function(err, hash) {
 		usr.password = hash;
@@ -75,7 +76,7 @@ UserSchema.statics.events = function(id, days_between_contact, start, end, done)
 		} else {
 			Reminder.where({dismissed: false, owner: id}).sort("date_activated 1").find(function(err, reminders) {
 				if(err) {
-					console.log("error retrieving reminders: " + err)
+					logger.error("error retrieving reminders: " + err)
 					done(null, clients)
 				} else {
 					// TODO: merge these two lists into lists with similar objects

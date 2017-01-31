@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var utils = require('./utils')
 var Client = require('./client')
+var logger = require('../server/logger')
 
 var supportedProps = ["comment", "client", "activity_type"]
 
@@ -20,9 +21,9 @@ ActivitySchema.statics.recent = function(id, skip, limit, done) {
 }
 
 ActivitySchema.statics.save = function(props, done) {
-	console.log("saving: " + JSON.stringify(props))
+	logger.info("saving: " + JSON.stringify(props))
 	props = utils.clean(props, supportedProps)
-	console.log("cleaned props: " + JSON.stringify(props))
+	logger.info("cleaned props: " + JSON.stringify(props))
 	var act = new Activity(props)
 	act.save(function(err, a) {
     	Client.findOneAndUpdate({_id: act.client}, {date_last_contact: Date.now()}, function(err, cli) {

@@ -6,11 +6,12 @@ var Client = models.Client;
 var Activity = models.Activity;
 var passport = require('passport');
 var jwt = require('jwt-simple');
+var logger = require('../server/logger')
 
 require('./auth')(router)
 
 router.get('/new', function(req, res) {
-    console.log("client/new")
+    logger.info("client/new")
 	return res.render('clients/new', {})
 });
 
@@ -42,8 +43,7 @@ router.param('clientid', function (req, res, next, id) {
 				}
 			}
         } else {
-            console.log("error reached")
-            console.log(err)
+            logger.error(err)
             err.status = 500
             next(err)
 		}
@@ -62,7 +62,7 @@ router.route('/:clientid/update')
     res.render('clients/edit', req.target)
 })
 .post(function(req, res, next) {
-    console.log(req.body)
+    logger.info(req.body)
 	Client.update(req.target._id, req.body, function(err, obj) {
 		if(err) {
 			throw err

@@ -8,9 +8,10 @@ var Activity = models.Activity;
 var passport = require('passport');
 var jwt = require('jwt-simple');
 var flash = require('express-flash')
+var logger = require('../server/logger')
 
 router.param('userid', function(req, res, next, id) {
-    console.log(id)
+    logger.info(id)
     User.findById(id, function(err, usr) {
         if (!err) {
             if (!usr) {
@@ -44,7 +45,7 @@ router.get('/register', function(req, res) {
 router.post("/", function(req, res, next) {
 
     User.register(req.body, function(err, _usr) {
-      console.log("registered user " + JSON.stringify(_usr) + " " + JSON.stringify(err))
+      logger.info("registered user " + JSON.stringify(_usr) + " " + JSON.stringify(err))
         if (err) {
             err.status = 500
 	          next(err)
@@ -89,7 +90,7 @@ router.route('/:userid/clients')
 router.get('/:userid/events', function(req, res) {
     var start = req.query.start
     var end = req.query.end
-    console.log(req.query);
+    logger.info(req.query);
     User.events(req.target._id, req.target.days_between_contact, start, end, function(err, events) {
         if (err) {
 			var err = new Error()

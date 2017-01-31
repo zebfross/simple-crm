@@ -1,5 +1,4 @@
 ﻿#!/usr/bin/env node
-
 var debug = require('debug')('SimpleCrm');
 var app = require('../app');
 var http = require('http');

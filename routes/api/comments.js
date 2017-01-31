@@ -2,6 +2,7 @@
 var router = express.Router();
 var passport = require('passport')
 var models = require('../models');
+var logger = require('../../server/logger')
 var Activity = models.Activity;
 
 router.all('*', function(req, res, next) {
@@ -12,10 +13,10 @@ router.all('*', function(req, res, next) {
 }, passport.authenticate('bearer', {session: false}))
 
 router.post("/", function(req, res) {
-	console.log("post to /comments")
+	logger.info("post to /comments")
 	Activity.save(req.body, function(err, obj) {
 		if(err) {
-			console.log("error: " + err)
+			logger.info("error: " + err)
 			return res.status(500).json({error: err})
 		} else {
 			return res.json(obj)
