@@ -25,7 +25,7 @@ var comments = require('./routes/comments')
 var User = require('./models/user')
 var config = require('./config/config')
 
-var logger = require('./server/logger');
+var logger = require('./server/logger')
 
 var app = express();
 
