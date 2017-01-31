@@ -40,6 +40,7 @@ app.engine('.hbs', exphbs({
     extname: '.hbs',
     helpers: helpers
 }));
+app.set('views', __dirname + '/views')
 app.set('view engine', '.hbs');
 
 // uncomment after placing your favicon in /public
