@@ -35,11 +35,8 @@ var app = express();
 //app.engine('handlebars', hbs.engine)
 
 //app.set('views', path.join(__dirname, config.viewPath));
-if(config.name == 'release') {
-    app.set('views', 'D:\\home\\site\\wwwroot\\views');
-} else {
-    app.set('views', path.join(__dirname, config.viewPath, 'views'))
-}
+app.set('views', path.join(__dirname, 'views'))
+
 app.engine('.hbs', exphbs({
     defaultLayout: 'main',
     extname: '.hbs',
@@ -61,13 +58,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(cookieParser());
-if(config.name == 'release') {
-    app.use(require('stylus').middleware('D:\\home\\site\\wwwroot\\public'))
-    app.use(express.static('D:\\home\\site\\wwwroot\\public'))
-} else {
-    app.use(require('stylus').middleware(path.join(__dirname, config.viewPath, 'public')));
-    app.use(express.static(path.join(__dirname, config.viewPath, 'public')));
-}
+app.use(require('stylus').middleware(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     keys: ['atoe23!***-_HNT2223O><P', 'schhbvmwAOEU><P@#%798tsh']
 }));
