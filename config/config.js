@@ -23,7 +23,7 @@ var options = {
         root: rootPath,
         notifier: notifier,
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
-        viewPath: 'views',
+        viewPath: '.',
         app: {
             name: 'Simple CRM'
         },
@@ -58,7 +58,7 @@ var options = {
         db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
         root: rootPath,
         notifier: notifier,
-        viewPath: 'views',
+        viewPath: '.',
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
         app: {
             name: 'Simple CRM'
@@ -94,7 +94,7 @@ var options = {
         db: createDbConnectionString("ds131729.mlab.com:31729", "simplecrm"),
         root: rootPath,
         notifier: notifier,
-        viewPath: '../views',
+        viewPath: '..',
 		secret: 'ebb65a09-0f30-41db-b9ad-9a199a0db862',
         app: {
             name: 'Simple CRM'

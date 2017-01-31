@@ -35,12 +35,12 @@ var app = express();
 //app.engine('handlebars', hbs.engine)
 
 //app.set('views', path.join(__dirname, config.viewPath));
+app.set('views', path.join(__dirname, config.viewPath, 'views'))
 app.engine('.hbs', exphbs({
     defaultLayout: 'main',
     extname: '.hbs',
     helpers: helpers
 }));
-app.set('views', __dirname + '/views')
 app.set('view engine', '.hbs');
 
 // uncomment after placing your favicon in /public
@@ -57,8 +57,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(cookieParser());
-app.use(require('stylus').middleware(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('stylus').middleware(path.join(__dirname, config.viewPath, 'public')));
+app.use(express.static(path.join(__dirname, config.viewPath, 'public')));
 app.use(session({
     keys: ['atoe23!***-_HNT2223O><P', 'schhbvmwAOEU><P@#%798tsh']
 }));
