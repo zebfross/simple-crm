@@ -20,3 +20,7 @@ body {
 #clients-search {
     margin-bottom: 3px;
 }
+
+.pointer {
+    cursor: pointer;
+}

@@ -2418,7 +2418,7 @@ $(document).ready(function () {
 	$('#ajax-content').on('click', 'a', function(e) {
 		ajaxLink.call(this, e);
 	});
-	$('#page-search').on('keydown', function(e){
+	/*$('#page-search').on('keydown', function(e){
 		if (e.keyCode == 13){
 			e.preventDefault();
 			$('#content').removeClass('full-content');
@@ -2426,7 +2426,7 @@ $(document).ready(function () {
 			window.location.hash = ajax_url;
 			LoadAjaxContent(ajax_url);
 		}
-	});
+	});*/
 	$('#screen_unlock').on('mouseover', function(){
 		var header = 'Enter current username and password';
 		var form = $('<div class="form-group"><label class="control-label">Username</label><input type="text" class="form-control" name="username" /></div>'+
