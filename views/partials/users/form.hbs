@@ -1,0 +1,54 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-name">
+                    <i class="fa fa-search"></i>
+                    <span>User Profile
+                    </span>
+                </div>
+
+                <div class="box-icons">
+                    <a class="expand-link fa fa-expand" style="font-style: italic"></a>
+                </div>
+
+                <div class="no-move"></div>
+            </div>
+
+            <div class="box-content">
+                <h4 class="page-header">User<i class="fa fa-pencil"></i></h4>
+                <form method="POST" class="form-horizontal" id="user-form" data-toggle="validator" name="user-form" action="/users/{{user._id}}/update">
+                    <input id="_id" name="_id" type="hidden" value="{{user._id}}">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Display Name <span class="required" />
+                        </label>
+
+                        <div class="col-sm-4">
+                            <input class="form-control" data-placement="bottom" required data-toggle="tooltip" id="display_name" name="display_name" placeholder="Display Name" type="text" value="{{user.display_name}}">
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Email</label>
+
+                        <div class="col-sm-4">
+                            <input class="form-control" id="email" name="email" placeholder="Email" type="text" value="{{user.email}}">
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <a class="btn btn-default btn-label-left" href="/home">Cancel</a>
+                            <button class="btn btn-primary btn-label-left" type="submit">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

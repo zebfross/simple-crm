@@ -7,7 +7,7 @@ var utils = require('./utils')
 var moment = require('moment')
 var logger = require('../server/logger')
 
-var supportedProps = ["name_first", "name_last", "phones", "address1", "address2", "city", "state", "zip", "notes", "birthday", "anniversary", "rating", "email"]
+var supportedProps = ["name_first", "name_last", "phones", "address1", "address2", "city", "state", "zip", "notes", "birthday", "remind_me", "anniversary", "rating", "email"]
 
 var ClientSchema = new Schema({
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -26,6 +26,7 @@ var ClientSchema = new Schema({
     notes: String,
     birthday: Date,
     anniversary: Date,
+    remind_me: Date,
 	date_created: {type: Date, default: Date.now },
     date_last_contact: {
         type: Date,

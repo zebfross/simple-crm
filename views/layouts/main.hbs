@@ -10,6 +10,7 @@
     <!-- bower:css-->
     <link rel="stylesheet" href="/plugins/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="/plugins/bootstrapvalidator/dist/css/bootstrapValidator.css" />
+    <link rel="stylesheet" href="/stylesheets/bootstrap-datetimepicker.min.css" />
     <link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.css" />
     <!-- endbower-->
     <link href="/stylesheets/jquery-ui.min.css" rel="stylesheet">
@@ -51,7 +52,9 @@
                     <div class="row">
                         <div class="col-xs-8 col-sm-4"><a href="#" class="show-sidebar"><i class="fa fa-bars"></i></a>
                             <div id="page-search" class="search">
-                                <input type="text" placeholder="search"><i class="fa fa-search"></i></div>
+                                <input id="clients-search" class="search" type="search" placeholder="search" data-column="all">
+                                <i class="clients-reset fa fa-close fa-lg" style="color: black;"></i>
+                            </div>
                         </div>
                         <div class="col-xs-4 col-sm-8 top-panel-right">
                             <ul class="nav navbar-nav pull-right panel-menu">
@@ -100,10 +103,12 @@
     </div>
     <!-- End Container-->
     <!-- bower:js-->
+    <script src="/javascripts/moment.js"></script>
     <script src="/plugins/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/plugins/bootstrapvalidator/dist/js/bootstrapValidator.js"></script>
     <script src="/plugins/blueimp-md5/js/md5.js"></script>
     <script src="/plugins/jquery.tablesorter/dist/js/jquery.tablesorter.combined.js"></script>
+    <script src="/javascripts/bootstrap-datetimepicker.min.js"></script>
     <!-- endbower-->
     <!-- All functions for this theme + document.ready processing-->
     <script src="/plugins/jquery.tablesorter/dist/js/widgets/widget-pager.min.js"></script>
@@ -115,6 +120,9 @@
     <script src="/javascripts/scripts.js"></script>
     <script type="text/javascript">
         initUserPicture("{{user.email}}");
+        $(function () {
+            $('input[type="datetime"]').datetimepicker();
+        });
         /*var _logout = function() {
         User.logout();
           };

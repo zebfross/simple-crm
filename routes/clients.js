@@ -33,7 +33,7 @@ router.param('clientid', function (req, res, next, id) {
                 err.status = 404
                 next(err);
 			} else {
-				if(client.owner == req.user._id) { // TODO: or req.user.isAdmin
+				if(client.owner.toString() == req.user._id) { // TODO: or req.user.isAdmin
 					req.target = client;
 					next();
 				} else {

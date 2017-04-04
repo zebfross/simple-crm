@@ -15,6 +15,7 @@
 var options = {
     debug: {
         name: 'debug',
+        host: 'http://localhost:3000',
         db: "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@ds131729.mlab.com:31729/simplecrm",
         root: rootPath,
         notifier: notifier,
@@ -51,6 +52,7 @@ var options = {
     },
     test: {
         name: 'test',
+        host: 'http://localhost:3000',
         db: "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@ds131729.mlab.com:31729/simplecrm",
         root: rootPath,
         notifier: notifier,
@@ -87,6 +89,7 @@ var options = {
     },
     release: {
         name: 'release',
+        host: 'http://crm.zebfross.com',
         db: "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@ds056669-a0.mlab.com:56669,ds056669-a1.mlab.com:56662/simple-crm-1?replicaSet=rs-ds056669",
         root: rootPath,
         notifier: notifier,

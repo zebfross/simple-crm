@@ -18,7 +18,9 @@ var UserSchema = new Schema({
 	days_between_contact: {type: Number, default: 60},
     clients: [{ type: Schema.Types.ObjectId, ref: 'Client' }],
     alerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
-    reminders: [{type: Schema.Types.ObjectId, ref: 'Reminder'}]
+    reminders: [{type: Schema.Types.ObjectId, ref: 'Reminder'}],
+	social_provider: String,
+	social_id: String
 }, { collection: 'crm_users' });
 
 UserSchema.statics.validPassword = function(orig, _password, done) {
@@ -36,6 +38,43 @@ UserSchema.statics.hash = function(pass, done) {
 	}
 }
 
+UserSchema.statics.findOrCreateFromSocialProfile  = function (profile, callback) {
+    User.findOne({ social_id: profile.id, social_provider: profile.provider }, function (err, found) {
+        if (err || found == undefined) {
+			var newUser = new User({display_name: profile.displayName, social_id: profile.id, social_provider: profile.provider})
+            newUser.save(function (err, result) {
+                if (err) {
+                    logger.error("findOrCreate error saving: " + JSON.stringify(err), usr)
+                    return callback(err, false)
+                } else {
+                    return callback(null, result)
+                }
+            })
+        } else {
+			logger.debug("found from social profile: " + profile.provider + " " + profile.id)
+            callback(null, found)
+        }
+    })
+}
+
+UserSchema.statics.findOrCreate  = function (usr, callback) {
+    User.findOne({ id: usr.id }, function (err, found) {
+        if (err || found == undefined) {
+            var newUser = new User(usr)
+            newUser.save(function (err, result) {
+                if (err) {
+                    logger.error("findOrCreate error saving: " + JSON.stringify(err), usr)
+                    return callback(err, false)
+                } else {
+                    return callback(null, result)
+                }
+            })
+        } else {
+            callback(null, found)
+        }
+    })
+}
+
 UserSchema.statics.register = function(props, done) {
 	props = utils.clean(props, supportedProps)
   logger.info("registering user " + JSON.stringify(props))
@@ -50,10 +89,12 @@ UserSchema.statics.register = function(props, done) {
 UserSchema.statics.update = function(id, props, done) {
 	props = utils.clean(props, supportedProps)
 	User.hash(props.password, function(err, hash) {
-		if(hash)
+		if(hash) {
 			props.password = hash
-		else
+		} else {
+			logger.error("unable to hash password: " + props.password)
 			delete props.password
+		}
 		User.findOneAndUpdate({_id: id}, props, done)
 	})
 }

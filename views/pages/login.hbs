@@ -1,6 +1,6 @@
 <div id="page-login" class="row"></div>
 <div class="col-xs-12 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
-    <div class="text-right"><a href="/users/register" class="txt-default">Need an account?</a></div>&#x9;&#x9;
+    <div class="text-right"><a href="/users/register" class="txt-default">Need an account?</a></div>
     <div class="box">
         <form id="login-form" action="/users/login" method="POST" class="box-content">
             <div class="text-center">
@@ -9,17 +9,10 @@
             {{#if messages.error}}
                 <div class="alert alert-danger">Invalid username or password.</div>
             {{/if}}
-            <div class="form-group">
-                <label class="control-label">Username</label>&#x9;&#x9;&#x9;&#x9;&#x9;
-                <input id="username" type="text" name="username" required="required" class="form-control" />
-            </div>&#x9;&#x9;&#x9;&#x9;
-            <div class="form-group">
-                <label class="control-label">Password</label>&#x9;&#x9;&#x9;&#x9;&#x9;
-                <input id="password" type="password" name="password" required="required" class="form-control" />
-            </div>&#x9;&#x9;&#x9;&#x9;
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Sign in</button>
-            </div>
+            <a role="button" class="btn btn-facebook" href="/auth/facebook">
+                <img src="/images/glyphicons-social-facebook.png" height="25" width="25"> Log In
+            </a>
+            <a href="/users/register" class="btn btn-success">Sign Up &raquo;</a>
         </form>
     </div>
 </div>

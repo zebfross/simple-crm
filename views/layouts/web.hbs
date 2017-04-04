@@ -35,14 +35,9 @@
                 </button><a href="/" class="navbar-brand">Simple CRM</a></div>
             <div id="navbar" class="navbar-collapse collapse">
                 <form action="/users/login" method="POST" class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <input type="text" placeholder="email" name="username" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Password" name="password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Log In</button>
-                    <span style="color:white;">or</span> 
+					<a role="button" class="btn btn-facebook" href="/auth/facebook">
+						<img src="/images/glyphicons-social-facebook.png" height="25" width="25"> Log In
+					</a>
                     <a href="/users/register" class="btn btn-success">Sign Up &raquo;</a>
                 </form>
             </div>

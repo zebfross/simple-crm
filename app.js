@@ -8,9 +8,7 @@ var expressWinston = require('express-winston');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var BearerStrategy = require('passport-http-bearer').Strategy;
+var passport = require('./server/auth');
 var session = require('cookie-session')
 var jwt = require('jwt-simple');
 var flash = require('express-flash')
@@ -47,12 +45,6 @@ app.set('view engine', '.hbs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));    
 
-app.use(expressWinston.logger({
-    transports: [
-        new (winston.transports.Console)({ level: 'silly', json: true, timestamp: true })
-    ]
-}));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -82,6 +74,8 @@ app.use( function( req, res, next ) {
 var mongodbUrl = config.db;
 logger.info('Using MongoDB URL: %s', mongodbUrl);
 
+
+mongoose.Promise = require('bluebird');
 mongoose.connect(mongodbUrl, function(error) {
     if (error) {
         logger.error('Could not connect to DB: %s', error);
@@ -95,73 +89,26 @@ mongoose.connection.on('error', function(error) {
     logger.error('MongoDB connection error: %s', error);
 });
 
-passport.serializeUser(function(user, done) {
-    //logger.info("serialized: " + user)
-    //done(null, user.id)
-    done(null, user)
-});
-
-passport.deserializeUser(function(user, done) {
-    /*logger.info("deserializing: " + user)
-    User.findById(user, function(err, usr) {
-        logger.info("error: " + err)
-        logger.info("user: " + usr)
-        done(null, usr)
-    })*/
-    done(null, user)
-});
-
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        User.findOne({
-            username: username
-        }, function(err, usr) {
-            if (err) {
-                return done(err);
-            }
-            if (!usr) {
-                return done(null, false, {
-                    message: 'Incorrect username.'
-                });
-            }
-            User.validPassword(usr.password, password, function(err, valid) {
-                if (err) {
-                    return done(err);
-                }
-                if (!valid) {
-                    return done(null, false, {
-                        message: 'Incorrect password.'
-                    });
-                } else {
-                    var token = jwt.encode({
-                        username: username
-                    }, config.secret);
-                    usr.token = token;
-                    return done(null, usr);
-                }
-            });
-        });
-    }
-));
-
-passport.use(new BearerStrategy(
-    function(token, done) {
-        var usr = jwt.decode(token, config.secret)
-        User.findOne({
-            username: usr.username
-        }, function(err, user) {
-            if (err) {
-                return done(err);
-            }
-            if (!user) {
-                return done(null, false);
-            }
-            return done(null, user);
-        });
-    }
-));
-
 app.use('/', anonymous)
+
+app.get('/auth/google',
+    passport.authenticate('google', { scope: 'profile' }));
+
+app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/' }),
+    function (req, res) {
+        res.redirect('/home');
+    });
+
+app.get('/auth/facebook',
+    passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', { failureRedirect: '/' }),
+    function (req, res) {
+        res.redirect('/home');
+    });
+
 app.use('/home', home)
 app.use('/users', users)
 app.use('/clients', clients)
@@ -188,14 +135,6 @@ app.use(function(req, res, next) {
         }
         next(err);
     });*/
-
-// express-winston errorLogger makes sense AFTER the router.
-app.use(expressWinston.errorLogger({
-    transports: [
-        new (winstonMongodb)({ level: 'warn', db: config.db }),
-        new (winston.transports.Console)({ level: 'silly', json: true, timestamp: true })
-    ]
-}));
 
 // development error handler
 // will print stacktrace

@@ -1,21 +1,12 @@
-<h2>{{user.display_name}}</h2>
+<h2>{{user.display_name}}
+    <a href="/users/{{user._id}}/update"><i class="fa fa-pencil"></i></a>
+</h2>
 
 <div class="panel panel-default">
     <div class="panel-body">
         <div class="row">
             <div class="col-md-4">
-                <div><label>Email: </label> {{email}}</div>
-                <div><label>Phone: </label> {{phones.0.number}}</div>
-                <div><label>Rating: </label> {{rating}}</div>
-            </div>
-            <div class="col-md-4">
-                <div><label>City: </label> {{city}}</div>
-                <div><label>State: </label> {{state}}</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-8">
-                <label>Notes: </label> {{notes}}
+                <div><label>Email: </label> {{user.email}}</div>
             </div>
         </div>
     </div>

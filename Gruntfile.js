@@ -37,7 +37,8 @@
 			}
 		},
 		exec: {
-			run: 'node bin/www'
+			run: 'node www',
+			debug: 'node debug www'
 		},
 		simplemocha: {
 			all: {
@@ -69,6 +70,7 @@
 
 	grunt.registerTask('test', ['simplemocha:all']);
 	grunt.registerTask('run', ['exec:run']);
+	grunt.registerTask('debug', ['exec:debug']);
     grunt.registerTask('heroku', ['exec:run']);
 
 };

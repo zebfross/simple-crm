@@ -2,10 +2,6 @@
 
 <div class="table-responsive">
     <h3 style="display:inline;">Contacts </h3>
-    <div class="search pull-right">
-        <input id="clients-search" type="search" data-column="all" placeholder="search">
-        <i class="clients-reset fa fa-close fa-lg" style="color: black;"></i>
-    </div>
     <table id="clients-table" class="table table-hover tablesorter">
         <thead>
             <tr>
@@ -13,6 +9,7 @@
                 <th>L Name</th>
                 <th>Rating</th>
                 <th>Last Contact</th>
+                <th>Next Contact</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +19,7 @@
                 <td><span class="text">{{name_last}}</span></td>
                 <td><span class="text">{{rating}}</span></td>
                 <td>{{date_last_contact_formatted}} <span class="hide text">{{formatDate date_last_contact ""}}</span></td>
+                <td><span class="text">{{formatDate remind_me "MM/DD/YYYY hhA"}}</span></td>
             </tr>
             {{/clients}}
         </tbody>
@@ -71,7 +69,7 @@
                 pager_seperator: " of "
             }
         });
-        /*$("#clients-search").change(function() {
+        $("#clients-search").change(function() {
             var $this = $(this),
                 totalColumns = $table[0].config.columns,
                 filter = [];
@@ -80,7 +78,7 @@
             $table.trigger('search', [filter]);
             return false;
         })
-        $("#clients-search-form").submit(function(){
+        /*$("#clients-search-form").submit(function(){
             return false;
         })*/
     });

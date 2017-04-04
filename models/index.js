@@ -4,5 +4,6 @@ module.exports = {
     Client: require('./client'),
     Activity: require('./activity'),
     Reminder: require('./reminder'),
-    Alert: require('./alert')
+    Alert: require('./alert'),
+    Token: require('./token')
 };
