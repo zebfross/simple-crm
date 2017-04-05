@@ -70,6 +70,7 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="/users/{{user._id}}/details"><i class="fa fa-user"></i><span>Profile</span></a></li>
+                                        <li><a href="/home/feedback"><i class="fa fa-bullhorn"></i><span>Feedback</span></a></li>
                                         <li><a href="ajax/page_messages.html" class="ajax-link"><i class="fa fa-envelope"></i><span>Messages</span></a></li>
                                         <li><a id="logout" href="/users/logout"><i class="fa fa-power-off"></i><span>Logout</span></a></li>
                                     </ul>
@@ -89,6 +90,7 @@
                 <ul class="nav main-menu">
                     <li><a href="/home" class="active"><i class="fa fa-dashboard"></i><span class="hidden-xs">Dashboard</span></a></li>
                     <li><a href="/clients/new" class="active new-client-link"><i class="fa fa-user"></i><span class="hidden-xs">New Client</span></a></li>
+                    <li><a href="/home/feedback" class="active"><i class="fa fa-bullhorn"></i><span class="hidden-xs">Feedback</span></a></li>
                 </ul>
             </div>
             <!-- Start Content-->
@@ -96,6 +98,9 @@
                 <div class="preloader hide">
                     <img src="/images/devoops_getdata.gif" alt="preloader" class="devoops-getdata">
                 </div>
+                {{#messages.info}}
+                    <div class="alert alert-info">{{{this}}}</div>
+                {{/messages.info}}
                 {{{body}}}
             </div>
             <!-- End Content-->

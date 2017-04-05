@@ -44,7 +44,10 @@
         </div>
     </nav>
     <div class="container-fluid page-content">
-    {{{body}}}
+        {{#messages.info}}
+            <div class="alert alert-info">{{{this}}}</div>
+        {{/messages.info}}
+        {{{body}}}
     </div>
     <footer>
         <p>&copy; Simple CRM 2015</p>

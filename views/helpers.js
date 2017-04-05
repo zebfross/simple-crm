@@ -6,5 +6,16 @@ module.exports = {
     },
     formatDate: function(d, fmt) {
         return moment(d).format(fmt)
+    },
+    debug: function(optionalValue) {
+        console.log("Current Context");
+        console.log("====================");
+        console.log(this);
+         
+        if (optionalValue) {
+            console.log("Value");
+            console.log("====================");
+            console.log(optionalValue);
+        }
     }
 }
