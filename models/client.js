@@ -7,13 +7,14 @@ var utils = require('./utils')
 var moment = require('moment')
 var logger = require('../server/logger')
 
-var supportedProps = ["name_first", "name_last", "phones", "address1", "address2", "city", "state", "zip", "notes", "birthday", "remind_me", "anniversary", "rating", "email"]
+var supportedProps = ["name_first", "name_last", "categories", "phones", "address1", "address2", "city", "state", "zip", "notes", "birthday", "remind_me", "anniversary", "rating", "email"]
 
 var ClientSchema = new Schema({
     owner: { type: Schema.Types.ObjectId, ref: 'User' },
     name_first: {type: String, required: true},
     name_last: String,
     email: String,
+    categories: String,
     phones: [{
             phone_type: String,
             number: String
@@ -44,6 +45,13 @@ var ClientSchema = new Schema({
 
 ClientSchema.methods.date_last_contact_formatted = function() {
     return moment(this.date_last_contact).fromNow()
+}
+
+ClientSchema.methods.categoriesArray = function() {
+    if(this.categories && this.categories.length > 0) {
+        return this.categories.split(",");
+    }
+    return [];
 }
 
 ClientSchema.statics.create = function(owner, props, done) {

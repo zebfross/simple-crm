@@ -33,9 +33,14 @@
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Email</label>
-
                         <div class="col-sm-4">
                             <input class="form-control" id="email" name="email" placeholder="Email" type="text" value="{{user.email}}">
+                        </div>
+
+                        <label class="col-sm-2 control-label">Client Categories</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="categories" name="categories" placeholder="Categories comma-separated" type="text" value="{{user.categories}}">
+                            <em>E.g. Lead, Prospect, XYZ Event etc.
                         </div>
                     </div>
 
@@ -52,3 +57,13 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="/javascripts/bootstrap-tokenfield.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('#categories').tokenfield({
+        delimiter: [',',';'],
+        createTokensOnBlur: true
+    });
+});
+</script>

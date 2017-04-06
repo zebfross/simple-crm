@@ -17,5 +17,8 @@ module.exports = {
             console.log("====================");
             console.log(optionalValue);
         }
+    },
+    commaSplit: function(str) {
+        return str.split(",");
     }
 }

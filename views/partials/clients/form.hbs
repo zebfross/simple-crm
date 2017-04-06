@@ -78,13 +78,20 @@
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Rating</label>
-
                         <div class="col-sm-4">
                             <input class="form-control" id="rating" name="rating" placeholder="Rating" type="number" value="{{rating}}">
                             <div class="help-block with-errors"></div>
                         </div>
-                        <label class="col-sm-2 control-label">Next Contact Date</label>
 
+                        <label class="col-sm-2 control-label">Categories 
+                            <small><a href="/users/{{user._id}}/update">customize suggestion list</a></small>
+                        </label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="categories" name="categories" placeholder="Categories comma-separated" type="text" value="{{categories}}">
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <label class="col-sm-2 control-label">Next Contact Date</label>
                         <div class="col-sm-4">
                             <input class="form-control" id="remind_me" name="remind_me" placeholder="Remind Me" type="datetime" value="{{formatDate remind_me "MM/DD/YYYY hhA"}}">
                             <div class="help-block with-errors"></div>
@@ -126,3 +133,21 @@
                     </span>
                 </div>
             </div>-->
+<script src="/javascripts/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap-tokenfield.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    var userCategories = "{{user.categories}}".split(",");
+
+    $('#categories').tokenfield({
+        autocomplete: {
+            source: userCategories,
+            delay: 50
+        },
+        showAutocompleteOnFocus: true,
+        delimiter: [',',';'],
+        createTokensOnBlur: true
+    });
+    
+});
+</script>

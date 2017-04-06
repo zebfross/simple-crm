@@ -8,7 +8,7 @@
                 <th>F Name</th>
                 <th>L Name</th>
                 <th>Rating</th>
-                <th>Last Contact</th>
+                <th>Categories</th>
                 <th>Next Contact</th>
             </tr>
         </thead>
@@ -18,7 +18,7 @@
                 <td><span class="text">{{name_first}}</span></td>
                 <td><span class="text">{{name_last}}</span></td>
                 <td><span class="text">{{rating}}</span></td>
-                <td>{{date_last_contact_formatted}} <span class="hide text">{{formatDate date_last_contact ""}}</span></td>
+                <td><span class="text">{{categories}}</span></td>
                 <td><span class="text">{{formatDate remind_me "MM/DD/YYYY"}}</span></td>
             </tr>
             {{/clients}}

@@ -24,3 +24,7 @@ body {
 .pointer {
     cursor: pointer;
 }
+
+.tokenfield.form-control {
+    height: 70px;
+}

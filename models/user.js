@@ -8,7 +8,7 @@ var Reminder = require('./reminder')
 var utils = require('./utils')
 var logger = require('../server/logger')
 
-var supportedProps = ["username","password","display_name","email","days_between_contact"]
+var supportedProps = ["username","password","display_name","email","days_between_contact", "categories"]
 
 var UserSchema = new Schema({
     username: String,
@@ -19,9 +19,17 @@ var UserSchema = new Schema({
     clients: [{ type: Schema.Types.ObjectId, ref: 'Client' }],
     alerts: [{ type: Schema.Types.ObjectId, ref: 'Alert' }],
     reminders: [{type: Schema.Types.ObjectId, ref: 'Reminder'}],
+	categories: {type: String, default: "Lead,Prospect,Recruit,Client"},
 	social_provider: String,
 	social_id: String
 }, { collection: 'crm_users' });
+
+UserSchema.methods.categoriesArray = function() {
+    if(this.categories && this.categories.length > 0) {
+        return this.categories.split(",");
+    }
+    return [];
+}
 
 UserSchema.statics.validPassword = function(orig, _password, done) {
 	bcrypt.compare(_password, orig, done);
