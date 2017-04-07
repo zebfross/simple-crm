@@ -22,26 +22,23 @@
 
 <body>
     <nav class="navbar navbar-inverse home-navbar">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed" style="color:white;">
-                    <span class="sr-only">
-                        <Toggle>navigation</Toggle>
-                    </span>
-                    <!--<span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>-->
-                    Sign In
-                </button><a href="/" class="navbar-brand">Simple CRM</a></div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <form action="/users/login" method="POST" class="navbar-form navbar-right">
-					<a role="button" class="btn btn-facebook" href="/auth/facebook">
-						<img src="/images/glyphicons-social-facebook.png" height="25" width="25"> Log In
-					</a>
-                    <a href="/users/register" class="btn btn-success">Sign Up &raquo;</a>
-                </form>
-            </div>
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Simple CRM</a>
         </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/auth/facebook">Log In</a></li>
+            <li><a href="/users/register">Sign Up</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
     </nav>
     <div class="container-fluid page-content">
         {{#messages.info}}
@@ -52,6 +49,7 @@
     <footer>
         <p>&copy; Simple CRM 2015</p>
     </footer>
+    <script src="/plugins/bootstrap/dist/js/bootstrap.js"></script>
     <script src="/javascripts/user.js"></script>
     <script src="/javascripts/scripts.js"></script>
 </body>
