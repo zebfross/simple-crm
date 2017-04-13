@@ -1,0 +1,27 @@
+<h3>Recent Changes</h3>
+<p>
+<span id="commits-list" class="list-group">
+
+</span>
+</p>
+<script src="/javascripts/GitHub.bundle.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    var gh = new GitHub({
+        token: "{{github_api_token}}"
+    });
+
+    var repo = gh.getRepo("zebfross", "simple-crm");
+    var twoWeeksAgo = new Date();
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+    var htmlTemplate = "<div class='list-group-item'>__message__<a class='pull-right' href='__url__' target='_blank'><i class='fa fa-github'></i> Details</a></div>";
+    repo.listCommits({since: twoWeeksAgo.toISOString()}, function(err, commits) {
+        for(var i=0; i < commits.length; ++i) {
+            var commitUrl = commits[i].html_url;
+            var commitMessage = commits[i].commit.message;
+            var html = htmlTemplate.replace("__url__", commitUrl).replace("__message__", commitMessage);
+            $("#commits-list").prepend(html);
+        }
+    });
+})
+</script>

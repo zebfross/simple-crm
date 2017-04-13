@@ -57,4 +57,8 @@ router.route("/feedback")
 
     })
 
+router.get('/support', function(req, res) {
+    res.render('pages/support', {github_api_token: process.env.github_api_token})
+})
+
 module.exports = router;

@@ -92,6 +92,7 @@
                     <li><a href="/home" class="active"><i class="fa fa-dashboard"></i><span class="hidden-xs">Dashboard</span></a></li>
                     <li><a href="/clients/new" class="active new-client-link"><i class="fa fa-user"></i><span class="hidden-xs">New Client</span></a></li>
                     <li><a href="/home/feedback" class="active"><i class="fa fa-bullhorn"></i><span class="hidden-xs">Feedback</span></a></li>
+                    <li><a href="/home/support" class="active"><i class="fa fa-newspaper-o"></i><span class="hidden-xs">Recent Updates</span></a></li>
                 </ul>
             </div>
             <!-- Start Content-->
@@ -129,28 +130,6 @@
         $(function () {
             $('input[type="datetime"]').datetimepicker();
         });
-        /*var _logout = function() {
-        User.logout();
-          };
-        User.authenticate(function(res) {
-          if(res) {
-          console.log("successfully authenticated");
-          } else {
-            console.log("error authenticating");
-            window.location = "/users/login";
-          }
-          });
-          var newClient = function() {
-          Client.activeId = null;
-          LoadAjaxContent('ajax/client_form.html');
-          };
-          $(function() {
-          $(".new-client-link").on("click", function(e) {
-            e.preventDefault();
-            newClient();
-            return false;
-          });
-          });*/
     </script>
 </body>
 
