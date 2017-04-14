@@ -20,7 +20,7 @@ $(function() {
             var commitUrl = commits[i].html_url;
             var commitMessage = commits[i].commit.message;
             var html = htmlTemplate.replace("__url__", commitUrl).replace("__message__", commitMessage);
-            $("#commits-list").prepend(html);
+            $("#commits-list").append(html);
         }
     });
 })
