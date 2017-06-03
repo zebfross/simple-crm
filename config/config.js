@@ -90,7 +90,7 @@ var options = {
     release: {
         name: 'release',
         host: 'http://crm.zebfross.com',
-        db: "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@ds056669-a0.mlab.com:56669,ds056669-a1.mlab.com:56662/simple-crm-1?replicaSet=rs-ds056669",
+        db: "mongodb://" + process.env.db_user + ":" + process.env.db_password + "@ds028540.mlab.com:28540/simple-crm-prod",
         root: rootPath,
         notifier: notifier,
         viewPath: '..',
