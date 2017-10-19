@@ -3,6 +3,7 @@ var router = express.Router();
 var models = require('../models');
 var querystring = require('querystring')
 var https = require('https')
+var logger = require('../server/logger')
 var User = models.User;
 var Client = models.Client;
 
@@ -43,9 +44,20 @@ router.route("/feedback")
         };
 
         // Set up the request
-        var post_req = https.request(post_options, function(res) {
-            res.setEncoding('utf8');
-            // TODO: error handling
+        var post_req = https.request(post_options, function(result) {
+            logger.debug(`STATUS: ${result.statusCode}`);
+            logger.debug(`HEADERS: ${JSON.stringify(result.headers)}`);
+            result.setEncoding('utf8');
+            result.on('data', (chunk) => {
+                logger.debug(`BODY: ${chunk}`);
+            });
+            result.on('end', () => {
+                logger.debug('');
+            });
+        });
+            
+        post_req.on('error', (e) => {
+            logger.error(`problem with request: ${e.message}`);
         });
 
         // post the data
