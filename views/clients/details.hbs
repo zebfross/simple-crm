@@ -6,12 +6,15 @@
         <div class="row">
             <div class="col-md-4">
                 <div><label>Email: </label> {{email}}</div>
-                <div><label>Phone: </label> {{phones.0.number}}</div>
+                <div><label>Phone: </label> {{formatPhone phones.0.number}}</div>
                 <div><label>Rating: </label> {{rating}}</div>
                 <div><label>Categories: </label> {{categories}}</div>
                 <div><label>Next Contact: </label> {{formatDate remind_me "MM/DD/YYYY hhA"}}</div>
             </div>
             <div class="col-md-4">
+                <div><label>Spouse: </label> {{spouse}}</div>
+                <div><label>Spouse #: </label> {{formatPhone spouse_phone}}</div>
+                <div><label>Referral: </label> {{referral}}</div>
                 <div><label>Address1: </label> {{address1}}</div>
                 <div><label>Address2: </label> {{address2}}</div>
                 <div><label>City: </label> {{city}}</div>
@@ -20,7 +23,7 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <label>Notes: </label> {{notes}}
+                <label>Notes: </label> {{{formatRich notes}}}
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 ﻿var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var moment = require('moment');
 var User = models.User;
 var Client = models.Client;
 var Activity = models.Activity;
@@ -11,8 +12,10 @@ var logger = require('../server/logger')
 require('./auth')(router)
 
 router.get('/new', function(req, res) {
-    logger.info("client/new")
-	return res.render('clients/new', {})
+	logger.info("client/new")
+	var weekFromNow = moment();
+	weekFromNow.add('d', 7);
+	return res.render('clients/new', {remind_me: weekFromNow.toDate()})
 });
 
 router.post('/', function(req, res) {

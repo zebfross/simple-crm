@@ -7,6 +7,16 @@ module.exports = {
     formatDate: function(d, fmt) {
         return moment(d).format(fmt)
     },
+    formatPhone: function(phone) {
+        if(!phone || phone == "")
+            return "";
+        return phone.replace(/^(\d{0,3})(\d{3})(\d{4})$/, '($1)$2-$3');
+    },
+    formatRich: function(richText) {
+        if(!richText || richText == "")
+            return "";
+        return richText.replace(/\r\n/g, '\<br /\>');
+    },
     debug: function(optionalValue) {
         console.log("Current Context");
         console.log("====================");

@@ -5,8 +5,11 @@
     <table id="clients-table" class="table table-hover tablesorter">
         <thead>
             <tr>
-                <th>F Name</th>
-                <th>L Name</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Spouse Name</th>
+                <th>Spouse Phone</th>
+                <th>Referral</th>
                 <th>Rating</th>
                 <th>Categories</th>
                 <th>Next Contact</th>
@@ -15,11 +18,14 @@
         <tbody>
             {{#clients}}
             <tr class="clickable" data-url="/clients/{{_id}}/details">
-                <td><span class="text">{{name_first}}</span></td>
-                <td><span class="text">{{name_last}}</span></td>
+                <td><span class="text">{{name_first}} {{name_last}}</span></td>
+                <td><span class="text">{{formatPhone phones.0.number}}</span></td>
+                <td><span class="text">{{spouse}}</span></td>
+                <td><span class="text">{{formatPhone spouse_phone}}</span></td>
+                <td><span class="text">{{referral}}</span></td>
                 <td><span class="text">{{rating}}</span></td>
                 <td><span class="text">{{categories}}</span></td>
-                <td><span class="text">{{formatDate remind_me "MM/DD/YYYY"}}</span></td>
+                <td><span class="text">{{formatDate remind_me "MM/DD/YYYY"}}</span><span class="hide">{{notes}}</span></td>
             </tr>
             {{/clients}}
         </tbody>
